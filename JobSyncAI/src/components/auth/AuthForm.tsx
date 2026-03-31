@@ -20,6 +20,10 @@ export default function AuthForm() {
   const [email, setEmail] = useState('')
   // Use state to manage the password value
   const [password, setPassword] = useState('')
+  // Use state to manage the error value
+  const [error, setError] = useState('')
+  // Use state to manage the loading value
+  const [loading, setLoading] = useState(false)
   /**
  * 
  * @param e 
@@ -62,7 +66,7 @@ export default function AuthForm() {
         </p>
         <div>
           <input
-            type="email" name="" id="email"
+            type="email" 
             value={email}
             onChange={handleEmailChange}
             placeholder='Email'
@@ -70,7 +74,7 @@ export default function AuthForm() {
           />
 
           <input
-            type="password" name="" id=""
+            type="password" 
             value={password}
             onChange={handlePasswordChange}
             placeholder='Password'
@@ -78,6 +82,7 @@ export default function AuthForm() {
           />
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
           >
             {isLogin ? 'Sign In' : 'Sign Up'}
