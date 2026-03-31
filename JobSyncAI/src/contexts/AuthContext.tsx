@@ -54,23 +54,22 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
      * @param password 
      */
     const signIn = async (email: string, password: string) => {
-        try{
-        
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        })
-        if(error){
-            console.error("Error with singIn:",error)
-            return{success:false,error: error.message}
-        }
-        console.log("sign-in success:", data)
-        return {session: true, data}
-        }catch(error){
-            console.error("Error:",error)
-        }
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            })
+            if (error) {
+                console.error("Error with signIn:", error)
+                return { success: false, error: error.message }
+            }
+            console.log("sign-in success:", data)
+            return { success: true, data }
 
-
+        } catch (error) {
+            console.error("Error:", error)
+            return { success: false, error: "An unexpected error occurred" }
+        }
     }
 
     /**
