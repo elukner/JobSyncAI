@@ -15,10 +15,12 @@ type AuthContextType={
 const AuthContext=createContext<AuthContextType|undefined>(undefined)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-    const [session, setSession] = useState(undefined)
+    const [session, setSession] = useState("Passed state")
 
     const signUp = async (email: string, password: string) => {
         // You'll put the supabase.auth.signUp() magic he shows in the video here!
+        
+
     }
 
     const signIn = async (email: string, password: string) => {

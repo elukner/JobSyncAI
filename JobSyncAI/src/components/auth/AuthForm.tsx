@@ -11,6 +11,7 @@
 // A Sign Up button.
 
 import { useState, type ChangeEvent } from 'react'
+import { UserAuth } from '../../contexts/AuthContext'
 
 
 export default function AuthForm() {
@@ -24,6 +25,12 @@ export default function AuthForm() {
   const [error, setError] = useState('')
   // Use state to manage the loading value
   const [loading, setLoading] = useState(false)
+
+  //todo debug delete later
+  const{session}=UserAuth()
+  //todo debug delete later
+  console.log(session)
+
   /**
  * 
  * @param e 
