@@ -7,11 +7,11 @@ import { supabase } from '../lib/supabase' // Connection to supabase
 //this is what user data will go in the bucket
 type AuthContextType = {
     session: any
-    // Update these two lines to tell TS we are returning a Promise with data
     signUp: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
     signIn: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
+    // Add this line! No email or password needed.
+    signOut: () => Promise<{ success: boolean; error?: any }>
 }
-
 //this is the bucket for the user data
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -78,21 +78,17 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
      * @param password 
      * @returns 
      */
-    const signOut = async (email: string, password: string) => {
-        //TODO
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-        })
+    const signOut = async () => {
+        const { error } = await supabase.auth.signOut()
         if (error) {
-            console.error("Error with signing up:", error)
-            return { success: false, error }
+            console.error("Error signing out:", error)
+            return { success: false, error: error.message }
         }
-        return { success: true, data }
+        return { success: true }
     }
 
     return (
-        <AuthContext.Provider value={{ session, signUp, signIn }}>
+        <AuthContext.Provider value={{ session, signUp, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )
