@@ -26,27 +26,23 @@ export default function AuthForm() {
   // Use state to manage the loading value
   const [loading, setLoading] = useState(false)
 
-  //todo debug delete later or put in in a useState
-  const { session, signUp } = UserAuth()
-  //todo debug delete later or put in in a useState
+
+  const { session, signUp, signIn } = UserAuth()
   console.log(session)
 
-  /**
- * 
- * @param e 
- */
-  const handleSubmit = (e: React.FormEvent) => {
-    //stop the page from refreshing
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    //prove it works by printing the state to the console
     console.log("Submitting:", { email, password, isLogin })
+    
     if (isLogin) { 
-      await signIn(...) 
+      await signIn(email, password) 
     }
     else { 
-      await signUp(...) 
+      await signUp(email, password) 
     }
   }
+
   /**
    * Handles the change event for the email input.
    * @param e 
