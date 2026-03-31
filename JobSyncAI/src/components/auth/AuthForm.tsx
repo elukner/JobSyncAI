@@ -57,7 +57,7 @@ export default function AuthForm() {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit} className='max-w-md m-auto pt-24'>
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
         <h2 className="font-bold pb-2">Sign up today!</h2>
         <p>
 

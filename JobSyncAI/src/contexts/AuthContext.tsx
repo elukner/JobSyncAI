@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
     const signUp = async (email: string, password: string) => {
         // You'll put the supabase.auth.signUp() magic he shows in the video here!
-        
+
 
     }
 

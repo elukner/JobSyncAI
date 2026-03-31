@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-gray-50">
+      <div className="flex flex-col items-center min-h-screen">
       <AuthForm />
       </div>
     </>
