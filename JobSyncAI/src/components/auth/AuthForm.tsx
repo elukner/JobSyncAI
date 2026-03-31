@@ -26,9 +26,9 @@ export default function AuthForm() {
   // Use state to manage the loading value
   const [loading, setLoading] = useState(false)
 
-  //todo debug delete later
-  const{session}=UserAuth()
-  //todo debug delete later
+  //todo debug delete later or put in in a useState
+  const{session,signUp}=UserAuth()
+  //todo debug delete later or put in in a useState
   console.log(session)
 
   /**
