@@ -19,7 +19,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [session, setSession] = useState<any>(null)
 
     const signUp = async (email: string, password: string) => {
-        // You'll put the supabase.auth.signUp() magic he shows in the video here!
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -34,12 +33,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     useEffect(() => {
-        // 1. Check the bucket immediately
+        //Check the bucket immediately
         supabase.auth.getSession().then(({ data: { session: initialSession } }) => {
             setSession(initialSession)
         })
 
-        // 2. Start listening (Notice I renamed the inner 'session' to 'currentSession')
+        //Start listening 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, currentSession) => {
             setSession(currentSession)
         })
@@ -50,7 +49,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     const signIn = async (email: string, password: string) => {
-        // You'll put the supabase.auth.signInWithPassword() magic here!
         //TODO
         const { data, error } = await supabase.auth.signUp({
             email: email,

@@ -27,7 +27,7 @@ export default function AuthForm() {
   const [loading, setLoading] = useState(false)
 
   //todo debug delete later or put in in a useState
-  const{session,signUp}=UserAuth()
+  const { session, signUp } = UserAuth()
   //todo debug delete later or put in in a useState
   console.log(session)
 
@@ -40,6 +40,12 @@ export default function AuthForm() {
     e.preventDefault()
     //prove it works by printing the state to the console
     console.log("Submitting:", { email, password, isLogin })
+    if (isLogin) { 
+      await signIn(...) 
+    }
+    else { 
+      await signUp(...) 
+    }
   }
   /**
    * Handles the change event for the email input.
@@ -73,7 +79,7 @@ export default function AuthForm() {
         </p>
         <div>
           <input
-            type="email" 
+            type="email"
             value={email}
             onChange={handleEmailChange}
             placeholder='Email'
@@ -81,7 +87,7 @@ export default function AuthForm() {
           />
 
           <input
-            type="password" 
+            type="password"
             value={password}
             onChange={handlePasswordChange}
             placeholder='Password'
