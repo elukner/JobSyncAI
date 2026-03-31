@@ -7,8 +7,8 @@ import { supabase } from '../lib/supabase' // Connection to supabase
 //this is what user data will go in the bucket
 type AuthContextType={
     session: any
-    signUp: (email:string,passowrd:string)=>void
-    signIn: (email:string,passowrd:string)=>void
+    signUp: (email:string,password:string)=>void
+    signIn: (email:string,password:string)=>void
 }
 
 //this is the bucket for the user data
@@ -24,4 +24,19 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const signIn = async (email: string, password: string) => {
         // You'll put the supabase.auth.signInWithPassword() magic here!
     }
+
+    return(
+        <AuthContext.Provider value={{ session, signUp, signIn }}>
+            {children}
+        </AuthContext.Provider>
+    )
+
+}
+
+export const UserAuth = ()=>{
+    const context = useContext(AuthContext)
+    if(context===undefined){
+        throw new Error ("UserAuth must be used inside an AuthContextProvider")
+    }
+    return context
 }

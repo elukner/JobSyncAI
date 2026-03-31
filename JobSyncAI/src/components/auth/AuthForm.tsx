@@ -82,7 +82,7 @@ export default function AuthForm() {
           />
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading} //Todo does this need to be a !email| !password? 
             className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
           >
             {isLogin ? 'Sign In' : 'Sign Up'}
