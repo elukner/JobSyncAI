@@ -27,7 +27,7 @@ export default function AuthForm() {
   const [loading, setLoading] = useState(false)
 
 
-  const { session, signUp, signIn } = UserAuth()
+  const { session, signUp, signIn, signOut } = UserAuth()
   console.log(session)
 
   
@@ -59,6 +59,17 @@ export default function AuthForm() {
   };
   return (
     <div>
+        {session && (
+        <div className="max-w-md mx-auto pt-10 text-center pb-8 border-b mb-8">
+          <h2 className="font-bold text-xl mb-4">You are logged in!</h2>
+          <button 
+            onClick={signOut} 
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            Log Out
+          </button>
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
         <h2 className="font-bold pb-2">Sign up today!</h2>
         <p>
@@ -101,4 +112,5 @@ export default function AuthForm() {
 
     </div>
   )
+  
 }
