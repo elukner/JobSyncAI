@@ -57,10 +57,8 @@ export default function AuthForm({ title, buttonText, onSubmitAction, footerLink
     e.preventDefault()
 
     await onSubmitAction(email, password)
-    clearTextBox()
-
-
   }
+  
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
