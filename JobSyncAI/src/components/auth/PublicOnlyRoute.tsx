@@ -9,7 +9,7 @@ interface PublicOnlyRouteProps {
 
 const PublicOnlyRoute = ({ 
   children, 
-  authenticationPath = '/dashboard' 
+  authenticationPath = '/dashboard'
 }: PublicOnlyRouteProps) => {
   const location = useLocation();
   const { session } = UserAuth(); // Assuming session exists if logged in
