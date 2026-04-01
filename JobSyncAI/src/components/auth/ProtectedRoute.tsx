@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ 
   children, 
-  authenticationPath = '/login' 
+  authenticationPath = '/authForm' 
 }: ProtectedRouteProps) => {
   const location = useLocation();
   const { session } = UserAuth(); // Assuming session exists if logged in
