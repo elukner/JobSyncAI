@@ -10,51 +10,22 @@
 
 // A Sign Up button.
 
-import { useState, type ChangeEvent } from 'react'
-import { UserAuth } from '../../contexts/AuthContext'
-import {useNavigate} from 'react-router-dom'
+import { useState, type ChangeEvent, type ReactNode } from 'react'
+
+interface AuthFormProps {
+  title: string;
+  buttonText: string;
+  onSubmitAction: (email: string, password: string) => Promise<void>;
+  footerLink: ReactNode;
+  loading?: boolean;
+}
 
 
-
-export default function AuthForm() {
-  // This is the switch for true = Login mode, false = Sign Up mode
-  const [isLogin, setIsLogin] = useState(true)
+export default function AuthForm({ title, buttonText, onSubmitAction, footerLink, loading }: AuthFormProps) {
   // Use state to manage the email value
   const [email, setEmail] = useState('')
   // Use state to manage the password value
   const [password, setPassword] = useState('')
-  // Use state to manage the error value
-  const [error, setError] = useState('')
-  // Use state to manage the loading value
-  const [loading, setLoading] = useState(false)
-  
-  const Maps = useNavigate()
-
-  const { session, signUp, signIn, signOut } = UserAuth()
-  console.log(session)
-
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Submitting:", { email, password, isLogin })
-    
-    if (isLogin) { 
-      await signIn(email, password) 
-      clearTextBox()
-      Maps('/dashboard')
-    }
-    else { 
-      await signUp(email, password) 
-      clearTextBox()
-      Maps('/dashboard')
-    }
-  }
-
-  const clearTextBox = () => {
-    setEmail('')
-    setPassword('')
-  };
-
   /**
    * Handles the change event for the email input.
    * @param e 
@@ -69,49 +40,59 @@ export default function AuthForm() {
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
+
+  /**
+   * 
+   */
+  const clearTextBox = () => {
+    setEmail('')
+    setPassword('')
+  };
+
+  /**
+   * 
+   * @param e 
+   */
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    await onSubmitAction(email, password)
+    clearTextBox()
+
+
+  }
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
-        <h2 className="font-bold pb-2">Sign up today!</h2>
-        <p>
-
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-blue-500 underline ml-1"
-          >
-            {isLogin ? 'Sign Up' : 'Sign In'}
-
-          </button>
-        </p>
-        <div>
+        <h2 className="font-bold pb-2 text-2xl">{title}</h2>
+        {footerLink}
+        <div className="mt-4">
           <input
             type="email"
             value={email}
             onChange={handleEmailChange}
             placeholder='Email'
             className='block w-full p-2 mb-4 border rounded text-black'
+            required
           />
-
           <input
             type="password"
             value={password}
             onChange={handlePasswordChange}
             placeholder='Password'
             className='block w-full p-2 mb-4 border rounded text-black'
+            required
           />
           <button
             type="submit"
-            disabled={loading} //Todo does this need to be a !email| !password? 
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
           >
-            {isLogin ? 'Sign In' : 'Sign Up'}
+            {loading ? 'Processing...' : buttonText}
           </button>
         </div>
       </form>
-
     </div>
   )
-  
 }
+
