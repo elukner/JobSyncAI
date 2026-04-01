@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
+import { UserAuth } from '../contexts/AuthContext';
+import {useNavigate} from 'react-router-dom'
+
 
 const Dashboard: React.FC = () => {
-  const [activeItem, setActiveItem] = useState('Dashboard');
-
-  const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
+  const [activeItem, setActiveItem] = useState('Dashboard')
+  const {signOut } = UserAuth()
+  const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings']
+  const maps = useNavigate()
+/**
+ * TODO
+ * @param e 
+ */
+  const handleSignOut = async (e: React.FormEvent) => {
+    console.log("signOut:")
+      await signOut() 
+      maps('/authForm')
+  }
 
   return (
     <div className="dashboard-container">
@@ -28,7 +41,11 @@ const Dashboard: React.FC = () => {
       <div className="main-content">
         <header className="header">
           <h1>{activeItem}</h1>
-          <button>Logout</button>
+          <button
+          onClick={handleSignOut} 
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+          Logout</button>
         </header>
 
         <main className="content-area">
