@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import AuthForm from './components/auth/AuthForm'
 
 export const router = createBrowserRouter([
+    { path: "/", element: <App/>},
     { path: "/authForm", element: <AuthForm/>},
     { path: "/dashboard", element: <Dashboard/>},
   //TODO  { path: "/Login", element: <App/>},
