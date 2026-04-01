@@ -37,26 +37,33 @@ export default function AuthForm() {
     
     if (isLogin) { 
       await signIn(email, password) 
+      clearTextBox()
     }
     else { 
       await signUp(email, password) 
+      clearTextBox()
     }
   }
+
+  const clearTextBox = () => {
+    setEmail('')
+    setPassword('')
+  };
 
   /**
    * Handles the change event for the email input.
    * @param e 
    */
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
   /**
  * Handles the change event for the password input.
  * @param e 
  */
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
+    setPassword(e.target.value)
+  }
   return (
     <div>
         {session && (
