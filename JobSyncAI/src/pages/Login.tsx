@@ -2,51 +2,42 @@ import { UserAuth } from '../contexts/AuthContext'
 import { Navigate, Link } from 'react-router-dom'
 import AuthForm from '../components/auth/AuthForm'
 import { useState } from 'react'
+
+/**
+ * 
+ * @returns 
+ */
 export default function Login() {
-  // This is the switch for true = Login mode, false = Sign Up mode
-  const [isLogin, setIsLogin] = useState(true)
-return (
-       <div>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
-        <h2 className="font-bold pb-2">Sign up today!</h2>
-        <p>
 
-          {isLogin ? "Don't have an account?" : "Already have an account?"}
-          <button
-            type="button"
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-blue-500 underline ml-1"
-          >
-            {isLogin ? 'Sign Up' : 'Sign In'}
+    const { signIn } = UserAuth()
+    const [loading, setLoading] = useState(false)
 
-          </button>
-        </p>
-        <div>
-          <input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder='Email'
-            className='block w-full p-2 mb-4 border rounded text-black'
-          />
+    /**
+     * 
+     * @param email 
+     * @param password 
+     */
+    const handleSignInAction = async (email: string, password: string) => {
+        setLoading(true)
+        try {
+            await signIn(email, password)
+        } catch (error) {
+            console.error("Login failed", error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder='Password'
-            className='block w-full p-2 mb-4 border rounded text-black'
-          />
-          <button
-            type="submit"
-            disabled={loading} //Todo does this need to be a !email| !password? 
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          >
-            {isLogin ? 'Sign In' : 'Sign Up'}
-          </button>
-        </div>
-      </form>
-
-    </div> 
-  )
+    return (
+        <AuthForm
+            title="Welcome Back"
+            buttonText="Sign In"
+            onSubmitAction={handleSignInAction}
+            loading={loading}
+            footerLink={
+                <p>Don't have an account?
+                    <Link to="/signup" className="text-blue-500 underline">Sign Up</Link></p>
+            }
+        />
+    )
 }
