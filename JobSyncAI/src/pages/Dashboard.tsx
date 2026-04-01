@@ -7,7 +7,7 @@ const Dashboard: React.FC = () => {
   const [activeItem, setActiveItem] = useState('Dashboard')
   const {signOut } = UserAuth()
   const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings']
-  const maps = useNavigate()
+  const Maps = useNavigate()
 /**
  * TODO
  * @param e 
@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
   const handleSignOut = async (e: React.FormEvent) => {
     console.log("signOut:")
       await signOut() 
-      maps('/authForm')
+      Maps('/authForm')
   }
 
   return (
