@@ -35,7 +35,7 @@ export default function Login() {
             onSubmitAction={handleSignInAction}
             loading={loading}
             footerLink={
-                <p>Don't have an account?
+                <p>Don't have an account?{' '}
                     <Link to="/signup" className="text-blue-500 underline">Sign Up</Link></p>
             }
         />

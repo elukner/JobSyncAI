@@ -33,7 +33,7 @@ return (
       onSubmitAction={handleSignUpAction}
       loading={loading}
       footerLink={
-        <p>Already have an account? 
+        <p>Already have an account?{' '} 
             <Link to="/login" className="text-blue-500 underline">Sign In</Link></p>
       }
     />
