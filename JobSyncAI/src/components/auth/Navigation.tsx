@@ -11,7 +11,6 @@ export default function Navigation({ children }: NavigationProps) {
   const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
 
   const handleSignOut = async () => {
-    // 1. You found the bug! No manual navigation needed here anymore.
     await signOut(); 
   };
 
