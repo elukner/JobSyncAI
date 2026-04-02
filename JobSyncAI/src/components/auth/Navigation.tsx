@@ -1,54 +1,55 @@
 import React, { useState, type ReactNode } from 'react';
 import { UserAuth } from '../../contexts/AuthContext';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface NavigationProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 export default function Navigation({ children }: NavigationProps) {
-  const [activeItem, setActiveItem] = useState('Dashboard');
-  const { signOut } = UserAuth();
-  const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
+    const { signOut } = UserAuth();
+    const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
+    const location = useLocation();
 
-  const handleSignOut = async () => {
-    await signOut(); 
-  };
+    const handleSignOut = async () => {
+        await signOut();
+    };
 
-  return (
-    <div className="dashboard-container">
-      {/* Sidebar */}
-      <nav className="sidebar">
-        <h2>Admin</h2>
-        <ul>
-          {menuItems.map(item => (
-            <li 
-              key={item} 
-              className={activeItem === item ? 'active' : ''}
-              onClick={() => setActiveItem(item)}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </nav>
+    return (
+        <div className="dashboard-container">
+            {/* Sidebar */}
+            <nav className="sidebar">
+                <h2>Admin</h2>
+                <ul>
+                    {menuItems.map(item => (
+                        <li key={item}>
+                            <NavLink
+                                to={`/${item.toLowerCase()}`}
+                                className={({ isActive }) => isActive ? 'active font-bold text-blue-600' : ''}
+                            >
+                                {item}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+            {/* Main Content Area (Header + The Page Content) */}
+            <div className="main-content">
+                <header className="header">
+                    <h1>{location.pathname}</h1>
+                    <button
+                        onClick={handleSignOut}
+                        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                    >
+                        Logout
+                    </button>
+                </header>
 
-      {/* Main Content Area (Header + The Page Content) */}
-      <div className="main-content">
-        <header className="header">
-          <h1>{activeItem}</h1>
-          <button
-            onClick={handleSignOut} 
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-          >
-            Logout
-          </button>
-        </header>
-
-        {/* This is the magic part. It injects the Dashboard content right here! */}
-        <main className="content-area">
-          {children} 
-        </main>
-      </div>
-    </div>
-  );
+                {/* This is the magic part. It injects the Dashboard content right here! */}
+                <main className="content-area">
+                    {children}
+                </main>
+            </div>
+        </div>
+    );
 }
