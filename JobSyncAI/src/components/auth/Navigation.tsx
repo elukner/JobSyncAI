@@ -11,6 +11,12 @@ export default function Navigation({ children }: NavigationProps) {
     const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
     const location = useLocation();
 
+    //Remove the slash
+    const cleanPath = location.pathname.replace('/', '');
+
+    //Capitalize the first letter and add the rest of the word back
+    const displayTitle = cleanPath.charAt(0).toUpperCase() + cleanPath.slice(1);
+
     const handleSignOut = async () => {
         await signOut();
     };
@@ -36,7 +42,7 @@ export default function Navigation({ children }: NavigationProps) {
             {/* Main Content Area (Header + The Page Content) */}
             <div className="main-content">
                 <header className="header">
-                    <h1>{location.pathname}</h1>
+                    <h1>{displayTitle}</h1>
                     <button
                         onClick={handleSignOut}
                         className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
