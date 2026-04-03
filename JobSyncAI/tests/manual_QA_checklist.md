@@ -5,6 +5,10 @@
 ## 1. Authentication (Ticket #1)
 - [ ] **Successful Login:** Given valid credentials, When I click "Sign In", Then I am redirected to `/dashboard`.
 - [ ] **Logout Flow:** Given I am logged in, When I click "Logout", Then my session ends and I am redirected to `/login`.
+- [ ] **Successful Sign Up:** Given I am on the `/signup` page, When I enter a new valid email and password and click "Sign Up", 
+Then my account is created in Supabase and I am redirected to `/dashboard`.
+- [ ] **Duplicate Account:** Given I am on the `/signup` page, When I try to sign up with an email that is already registered, 
+Then I see an error message and I am prevented from accessing the `/dashboard`.
 
 ## 2. Routing & Navigation (Ticket #16)
 - [ ] **The Bouncer (Protected Routes):** Given I am logged out, When I manually type `/dashboard` into the URL bar, Then I am immediately redirected to `/login`.
