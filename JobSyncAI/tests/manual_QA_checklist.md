@@ -16,9 +16,9 @@ Then I see an error message and I am prevented from accessing the `/dashboard`.
 - [ ] **SPA Navigation:** When I click between "Dashboard" and "Settings" in the sidebar, Then the URL updates instantly without the page flashing or doing a full browser reload.
 - [ ] **Active State:** When I am on `/dashboard`, Then the Dashboard link is visually highlighted in the sidebar.
 
-## 3. Dashboard UI & Shadcn (Tickets #3 & #22) - *In Progress*
-- [ ] *Placeholder: Verify grid layout is responsive (stacks on mobile, columns on desktop).*
-- [ ] *Placeholder: Verify mock job cards render correctly with Shadcn styles.*
+## 3. Dashboard UI & Shadcn (Tickets #3 & #22)
+- [ ] Verify grid layout is responsive (stacks on mobile, columns on desktop).
+- [ ] Placeholder: Verify mock job cards render correctly with Shadcn styles.
 
 ## 4. Job Form & Validation (Tickets #2 & #17) - *Upcoming*
 - [ ] *Placeholder: Verify form blocks submission if required fields are empty.*
