@@ -6,15 +6,22 @@ interface NavigationProps {
     children: ReactNode;
 }
 
+/**
+ * Navigation layout component that provides a sidebar menu and header with authentication controls.
+ * Renders a dashboard layout with navigation links and displays the current page title based on the route.
+ * 
+ * @component
+ * @param {NavigationProps} props - Component props
+ * @param {React.ReactNode} props.children - Page content to render in the main content area
+ * @returns {JSX.Element} The dashboard layout with sidebar navigation and main content area
+ */
 export default function Navigation({ children }: NavigationProps) {
     const { signOut } = UserAuth();
     const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
     const location = useLocation();
 
-    //Remove the slash
+    // Derive the header title from the current URL path 
     const cleanPath = location.pathname.replace('/', '');
-
-    //Capitalize the first letter and add the rest of the word back
     const displayTitle = cleanPath.charAt(0).toUpperCase() + cleanPath.slice(1);
 
     const handleSignOut = async () => {
@@ -23,7 +30,6 @@ export default function Navigation({ children }: NavigationProps) {
 
     return (
         <div className="dashboard-container">
-            {/* Sidebar */}
             <nav className="sidebar">
                 <h2>Admin</h2>
                 <ul>
@@ -39,7 +45,6 @@ export default function Navigation({ children }: NavigationProps) {
                     ))}
                 </ul>
             </nav>
-            {/* Main Content Area (Header + The Page Content) */}
             <div className="main-content">
                 <header className="header">
                     <h1>{displayTitle}</h1>
@@ -50,8 +55,6 @@ export default function Navigation({ children }: NavigationProps) {
                         Logout
                     </button>
                 </header>
-
-                {/* This is the magic part. It injects the Dashboard content right here! */}
                 <main className="content-area">
                     {children}
                 </main>
