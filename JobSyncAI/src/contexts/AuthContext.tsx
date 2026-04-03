@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase' // Connection to supabase
 
 type AuthContextType = {
     session: any
+    loading: boolean
     signUp: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
     signIn: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
     signOut: () => Promise<{ success: boolean; error?: any }>
@@ -24,6 +25,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
  */
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [session, setSession] = useState<any>(null)
+    const [loading, setLoading] = useState(true)
+
+
 
     const signUp = async (email: string, password: string) => {
         const { data, error } = await supabase.auth.signUp({
@@ -43,6 +47,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         //Check the bucket immediately
         supabase.auth.getSession().then(({ data: { session: initialSession } }) => {
             setSession(initialSession)
+            setLoading(false)
         })
 
         //Start listening 
@@ -84,7 +89,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ session, signUp, signIn, signOut }}>
+        <AuthContext.Provider value={{ loading, session, signUp, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )
