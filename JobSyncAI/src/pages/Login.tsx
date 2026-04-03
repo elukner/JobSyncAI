@@ -4,19 +4,18 @@ import AuthForm from '../components/auth/AuthForm'
 import { useState } from 'react'
 
 /**
+ * Login component for user authentication.
  * 
- * @returns 
+ * Provides a login form interface that allows users to sign in with their credentials.
+ * Manages loading state during the authentication process and handles any sign-in errors.
+ * 
+ * @returns {JSX.Element} The rendered login page with authentication form
  */
 export default function Login() {
 
     const { signIn } = UserAuth()
     const [loading, setLoading] = useState(false)
 
-    /**
-     * 
-     * @param email 
-     * @param password 
-     */
     const handleSignInAction = async (email: string, password: string) => {
         setLoading(true)
         try {
