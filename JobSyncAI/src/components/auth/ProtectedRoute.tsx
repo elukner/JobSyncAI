@@ -7,6 +7,29 @@ interface ProtectedRouteProps {
   authenticationPath?: string;
 }
 
+/**
+ * A route component that protects child routes by requiring user authentication.
+ * If no active session exists, redirects unauthenticated users to the login page.
+ * 
+ * @param {Object} props - The component props
+ * @param {React.ReactNode} props.children - The child components to render when authenticated
+ * @param {string} [props.authenticationPath='/login'] - The redirect path for unauthenticated users
+ * @returns {JSX.Element} The children if authenticated, otherwise a Navigate component to the authentication path
+ * 
+ * @example
+ * ```tsx
+ * <ProtectedRoute>
+ *   <Dashboard />
+ * </ProtectedRoute>
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * <ProtectedRoute authenticationPath="/auth/signin">
+ *   <AdminPanel />
+ * </ProtectedRoute>
+ * ```
+ */
 const ProtectedRoute = ({ 
   children, 
   authenticationPath = '/login' 
