@@ -1,7 +1,7 @@
 # JobSync AI
 
 ## The Mission
-JobSync AI is a secure, full-stack applicant tracking web application designed to help developers manage their job hunt. Phase 1 (MVP) focuses on secure client-side routing and database ingestion, paving the way for Phase 2: a Python microservice that utilizes Large Language Models (LLMs) to analyze resumes against saved job descriptions.
+JobSync AI is a secure, full-stack applicant tracking web application designed to help developers manage their job hunt. Phase 1 (MVP) focuses on secure client-side routing and database ingestion. Phase 2 introduces a Python microservice utilizing Large Language Models (LLMs) to analyze resumes against saved job descriptions. Phase 3 targets enterprise-level SaaS scalability, integrating Stripe for premium tier access and Multi-Factor Authentication (MFA) for enhanced security.
 
 ## Tech Stack
 * **Frontend:** React, TypeScript, Vite
@@ -17,6 +17,8 @@ JobSync AI is a secure, full-stack applicant tracking web application designed t
 - [ ] Form Validation for manual job ingestion
 - [ ] Profile Settings to store Master Resume data
 - [ ] AI Match Score and Keyword Gap Analysis
+- [ ] Cloud Deployment (Frontend on Vercel, Python API on Render)
+- [ ] Custom Domain Configuration
 
 ## Getting Started
 
