@@ -1,4 +1,28 @@
--The URL Test: Click "Dashboard", then click "Settings". Watch the URL bar. Does it instantly change to localhost:5173/settings without the page flashing/reloading? (If it flashes white and reloads the whole app, the router isn't working right).
--The Active State Test: When you are on /dashboard, is the Dashboard link visually highlighted in the sidebar? If you click "Analytics", does the highlight move?
--The 404 Trap Test: Since you haven't built the "Analytics" page yet, what happens when you click it? Does it crash the app, or does it show a blank page/error boundary? (It's okay if it errors for now, but you need to know exactly how your app behaves when a user clicks a dead link).
-The Bouncer Verification: Click "Logout". Do you end up at /login? If you hit the "Back" button on your browser right after logging out, does the bouncer stop you from getting back into the Dashboard?
+# JobSync AI - Manual QA Checklist
+
+*Instructions: Run through the relevant tests in this document before merging any feature branch into `main` to ensure no regressions have occurred.*
+
+## 1. Authentication (Ticket #1)
+- [ ] **Successful Login:** Given valid credentials, When I click "Sign In", Then I am redirected to `/dashboard`.
+- [ ] **Logout Flow:** Given I am logged in, When I click "Logout", Then my session ends and I am redirected to `/login`.
+
+## 2. Routing & Navigation (Ticket #16)
+- [ ] **The Bouncer (Protected Routes):** Given I am logged out, When I manually type `/dashboard` into the URL bar, Then I am immediately redirected to `/login`.
+- [ ] **The Reverse Bouncer:** Given I am already logged in, When I manually navigate to `/login`, Then I am redirected back to `/dashboard`.
+- [ ] **SPA Navigation:** When I click between "Dashboard" and "Settings" in the sidebar, Then the URL updates instantly without the page flashing or doing a full browser reload.
+- [ ] **Active State:** When I am on `/dashboard`, Then the Dashboard link is visually highlighted in the sidebar.
+
+## 3. Dashboard UI & Shadcn (Tickets #3 & #22) - *In Progress*
+- [ ] *Placeholder: Verify grid layout is responsive (stacks on mobile, columns on desktop).*
+- [ ] *Placeholder: Verify mock job cards render correctly with Shadcn styles.*
+
+## 4. Job Form & Validation (Tickets #2 & #17) - *Upcoming*
+- [ ] *Placeholder: Verify form blocks submission if required fields are empty.*
+- [ ] *Placeholder: Verify invalid URLs trigger a Zod error message.*
+
+## 5. Profile Settings (Ticket #5) - *Upcoming*
+- [ ] *Placeholder: Verify user can paste and save their Master Resume.*
+
+## 6. AI Match Engine (Tickets #6, #7, #8, #19) - *Upcoming*
+- [ ] *Placeholder: Verify clicking "Analyze Match" triggers a loading state.*
+- [ ] *Placeholder: Verify Match Score and Missing Keywords render correctly from the AI response.*
