@@ -1,20 +1,27 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import { supabase } from '../lib/supabase' // Connection to supabase
 
-//The Auth State Manager
-//file for your visual login form
-
-//this is what user data will go in the bucket
 type AuthContextType = {
     session: any
     signUp: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
     signIn: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
-    // Add this line! No email or password needed.
     signOut: () => Promise<{ success: boolean; error?: any }>
 }
-//this is the bucket for the user data
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+/**
+ * Authentication context provider component that manages user authentication state and operations.
+ * 
+ * Provides authentication functionality including sign up, sign in, and sign out capabilities.
+ * Automatically initializes the session on mount and listens for authentication state changes.
+ * 
+ * @param {Object} props - Component props
+ * @param {ReactNode} props.children - Child components to be wrapped by the auth context provider
+ * 
+ * @returns {JSX.Element} The AuthContext provider wrapping children components with authentication state
+ * 
+ */
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [session, setSession] = useState<any>(null)
 
@@ -48,11 +55,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [])
 
-    /**
-     * TODO
-     * @param email 
-     * @param password 
-     */
     const signIn = async (email: string, password: string) => {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
@@ -72,12 +74,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
-    /**
-     * TODO 
-     * @param email 
-     * @param password 
-     * @returns 
-     */
     const signOut = async () => {
         const { error } = await supabase.auth.signOut()
         if (error) {
