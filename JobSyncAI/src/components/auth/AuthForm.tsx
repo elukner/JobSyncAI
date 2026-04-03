@@ -1,15 +1,3 @@
-//The Login UI Component
-//file to globally track if you're logged in
-//When you are ready to type, your goal for this ticket is to build a simple form that has:
-
-// An Email input field.
-
-// A Password input field.
-
-// A Sign In button.
-
-// A Sign Up button.
-
 import { useState, type ChangeEvent, type ReactNode } from 'react'
 
 interface AuthFormProps {
@@ -20,45 +8,35 @@ interface AuthFormProps {
   loading?: boolean;
 }
 
-
+/**
+ * Reusable UI component for authentication screens (Login / Sign Up).
+ * Manages local form state and delegates the actual API logic to the parent via onSubmitAction.
+ */
 export default function AuthForm({ title, buttonText, onSubmitAction, footerLink, loading }: AuthFormProps) {
-  // Use state to manage the email value
+
   const [email, setEmail] = useState('')
-  // Use state to manage the password value
+
   const [password, setPassword] = useState('')
-  /**
-   * Handles the change event for the email input.
-   * @param e 
-   */
+
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
-  /**
- * Handles the change event for the password input.
- * @param e 
- */
+
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
-  /**
-   * 
-   */
   const clearTextBox = () => {
     setEmail('')
     setPassword('')
   };
 
-  /**
-   * 
-   * @param e 
-   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+    // Pass local state up to the parent component's auth handler
     await onSubmitAction(email, password)
   }
-  
+
   return (
     <div>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
