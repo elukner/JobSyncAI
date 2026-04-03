@@ -1,0 +1,4 @@
+-The URL Test: Click "Dashboard", then click "Settings". Watch the URL bar. Does it instantly change to localhost:5173/settings without the page flashing/reloading? (If it flashes white and reloads the whole app, the router isn't working right).
+-The Active State Test: When you are on /dashboard, is the Dashboard link visually highlighted in the sidebar? If you click "Analytics", does the highlight move?
+-The 404 Trap Test: Since you haven't built the "Analytics" page yet, what happens when you click it? Does it crash the app, or does it show a blank page/error boundary? (It's okay if it errors for now, but you need to know exactly how your app behaves when a user clicks a dead link).
+The Bouncer Verification: Click "Logout". Do you end up at /login? If you hit the "Back" button on your browser right after logging out, does the bouncer stop you from getting back into the Dashboard?
