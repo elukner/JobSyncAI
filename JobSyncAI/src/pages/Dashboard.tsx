@@ -5,41 +5,61 @@ import { AddJobSheet } from '@/components/jobs/AddJobSheet';
 // Define the shape of our data
 interface JobApplication {
   id: string;
+  user_id: string;
   company: string;
   title: string;
+  url: string | null;
+  description: string | null;
   status: 'Applied' | 'Interviewing' | 'Offer' | 'Rejected';
-  dateApplied: string;
+  created_at: string;
+  updated_at: string;
 }
 
 // The Mock Data Array
 const mockJobs: JobApplication[] = [
   {
     id: '1',
+    user_id: 'user-123', // Every job needs an owner!
     company: 'Stripe',
     title: 'Frontend Engineer',
     status: 'Interviewing',
-    dateApplied: '2026-03-28',
+    url: 'https://stripe.com/jobs/123',
+    description: 'Working on the checkout UI.',
+    created_at: '2026-03-28T10:00:00Z', // Matches Supabase timestamptz format
+    updated_at: '2026-03-28T10:00:00Z',
   },
   {
     id: '2',
+    user_id: 'user-123',
     company: 'Vercel',
     title: 'Full Stack Developer',
     status: 'Applied',
-    dateApplied: '2026-04-01',
+    url: null, // Optional fields can be null
+    description: null,
+    created_at: '2026-04-01T14:30:00Z',
+    updated_at: '2026-04-01T14:30:00Z',
   },
   {
     id: '3',
+    user_id: 'user-123',
     company: 'OpenAI',
     title: 'Software Engineer, UI',
     status: 'Rejected',
-    dateApplied: '2026-03-15',
+    url: 'https://openai.com/careers',
+    description: 'Building the future of AI interfaces.',
+    created_at: '2026-03-15T09:15:00Z',
+    updated_at: '2026-03-15T09:15:00Z',
   },
   {
     id: '4',
+    user_id: 'user-123',
     company: 'Spotify',
     title: 'React Developer',
     status: 'Offer',
-    dateApplied: '2026-03-10',
+    url: null,
+    description: 'Developing the Web Player experience.',
+    created_at: '2026-03-10T11:00:00Z',
+    updated_at: '2026-03-10T11:00:00Z',
   }
 ];
 
@@ -63,8 +83,10 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className='text-sm'>
               <ol className='mt-4 flex list-decimal flex-col gap-2 pl-6'>
-                <li>Status: {job.status}</li>
-                <li>Applied: {job.dateApplied}</li>
+                <li>Status: {job.status}</li>                
+                <li>URL: {job.url}</li>
+                <li>Description: {job.description}</li>
+                <li>Applied: {job.created_at}</li>
               </ol>
             </CardContent>
           </Card>
