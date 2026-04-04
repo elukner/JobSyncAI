@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase' // Connection to supabase
 
 type AuthContextType = {
     session: any
+    user: any
     loading: boolean
     signUp: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
     signIn: (email: string, password: string) => Promise<{ success: boolean; data?: any; error?: any }>
@@ -89,7 +90,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ loading, session, signUp, signIn, signOut }}>
+        <AuthContext.Provider value={{ loading, session, user: session?.user ?? null, signUp, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )

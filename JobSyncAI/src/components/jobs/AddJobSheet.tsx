@@ -17,6 +17,9 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { supabase } from "@/lib/supabase";
+import { useState } from "react";
+import { UserAuth } from "@/contexts/AuthContext";
 
 // 1. Define the schema
 const jobSchema = z.object({
@@ -33,23 +36,54 @@ type JobFormOutput = z.output<typeof jobSchema>;
 
 
 export function AddJobSheet() {
+const { user } = UserAuth();
+const [open, setOpen] = useState(false);
 
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<JobFormInput, any, JobFormOutput>({
     resolver: zodResolver(jobSchema),
   });
 
-  const onSubmit = (data: JobFormOutput) => {
-    console.log("Form Data:", data);
-  };
+
+const onSubmit = async (values: JobFormOutput) => {
+  if (!user) {
+    console.error("You must be logged in to save a job!");
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('jobs')
+      .insert([
+        {
+          ...values,
+          user_id: user.id 
+        }
+      ])
+      .select();
+
+    if (error) throw error;
+
+    console.log("Job saved successfully!", data);
+    setOpen(false); 
+    reset();
+
+  } catch (error) {
+    console.error("Error saving job:", error);
+  }
+};
+
+
+
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="default">+ Add Job</Button>
       </SheetTrigger>
