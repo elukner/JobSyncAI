@@ -6,7 +6,7 @@ import { AddJobSheet } from '@/components/jobs/AddJobSheet';
 interface JobApplication {
   id: string;
   company: string;
-  role: string;
+  title: string;
   status: 'Applied' | 'Interviewing' | 'Offer' | 'Rejected';
   dateApplied: string;
 }
@@ -16,28 +16,28 @@ const mockJobs: JobApplication[] = [
   {
     id: '1',
     company: 'Stripe',
-    role: 'Frontend Engineer',
+    title: 'Frontend Engineer',
     status: 'Interviewing',
     dateApplied: '2026-03-28',
   },
   {
     id: '2',
     company: 'Vercel',
-    role: 'Full Stack Developer',
+    title: 'Full Stack Developer',
     status: 'Applied',
     dateApplied: '2026-04-01',
   },
   {
     id: '3',
     company: 'OpenAI',
-    role: 'Software Engineer, UI',
+    title: 'Software Engineer, UI',
     status: 'Rejected',
     dateApplied: '2026-03-15',
   },
   {
     id: '4',
     company: 'Spotify',
-    role: 'React Developer',
+    title: 'React Developer',
     status: 'Offer',
     dateApplied: '2026-03-10',
   }
@@ -59,7 +59,7 @@ export default function Dashboard() {
           <Card key={job.id} className='max-w-md'>
             <CardHeader>
               <CardTitle>{job.company}</CardTitle>
-              <CardDescription>{job.role}</CardDescription>
+              <CardDescription>{job.title}</CardDescription>
             </CardHeader>
             <CardContent className='text-sm'>
               <ol className='mt-4 flex list-decimal flex-col gap-2 pl-6'>
