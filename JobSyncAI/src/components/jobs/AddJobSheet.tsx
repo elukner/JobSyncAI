@@ -21,7 +21,6 @@ import { supabase } from "@/lib/supabase";
 import { useState } from "react";
 import { UserAuth } from "@/contexts/AuthContext";
 
-// 1. Define the schema
 const jobSchema = z.object({
   company: z.string().min(1, { message: "Company name is required." }),
   title: z.string().min(1, { message: "Job title is required." }),
@@ -30,14 +29,35 @@ const jobSchema = z.object({
   status: z.enum(['Applied', 'Interviewing', 'Offer', 'Rejected']).default('Applied'),
 });
 
-// 2. Extract the type from the schema
 type JobFormInput = z.input<typeof jobSchema>;
 type JobFormOutput = z.output<typeof jobSchema>;
 
 
+/**
+ * AddJobSheet component for adding new jobs to the system.
+ * 
+ * This component renders a sheet modal that allows authenticated users to submit
+ * a new job application with details such as company name, job title, application
+ * status, job URL, and job description.
+ * 
+ * The form is validated using Zod schema and React Hook Form. On successful
+ * submission, the job data is inserted into the Supabase 'jobs' table associated
+ * with the current user.
+ * 
+ * @component
+ * @returns {JSX.Element} A sheet component with a form for adding a new job.
+ * 
+ * @requires UserAuth - Hook to get the current authenticated user
+ * @requires supabase - Supabase client instance for database operations
+ * @requires useForm - React Hook Form hook for form management
+ * @requires zodResolver - Zod schema resolver for form validation
+ * @requires jobSchema - Zod schema for job form validation
+ * 
+ * @throws {Error} Throws an error if the Supabase insert operation fails
+ */
 export function AddJobSheet() {
-const { user } = UserAuth();
-const [open, setOpen] = useState(false);
+  const { user } = UserAuth();
+  const [open, setOpen] = useState(false);
 
 
   const {
@@ -51,33 +71,33 @@ const [open, setOpen] = useState(false);
   });
 
 
-const onSubmit = async (values: JobFormOutput) => {
-  if (!user) {
-    console.error("You must be logged in to save a job!");
-    return;
-  }
+  const onSubmit = async (values: JobFormOutput) => {
+    if (!user) {
+      console.error("You must be logged in to save a job!");
+      return;
+    }
 
-  try {
-    const { data, error } = await supabase
-      .from('jobs')
-      .insert([
-        {
-          ...values,
-          user_id: user.id 
-        }
-      ])
-      .select();
+    try {
+      const { data, error } = await supabase
+        .from('jobs')
+        .insert([
+          {
+            ...values,
+            user_id: user.id
+          }
+        ])
+        .select();
 
-    if (error) throw error;
+      if (error) throw error;
 
-    console.log("Job saved successfully!", data);
-    setOpen(false); 
-    reset();
+      console.log("Job saved successfully!", data);
+      setOpen(false);
+      reset();
 
-  } catch (error) {
-    console.error("Error saving job:", error);
-  }
-};
+    } catch (error) {
+      console.error("Error saving job:", error);
+    }
+  };
 
 
 
