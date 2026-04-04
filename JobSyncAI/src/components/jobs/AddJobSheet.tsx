@@ -7,7 +7,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useForm } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -31,6 +38,7 @@ export function AddJobSheet() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<JobFormInput, any, JobFormOutput>({
     resolver: zodResolver(jobSchema),
@@ -68,6 +76,49 @@ export function AddJobSheet() {
                 <label className="font-medium">Job Title</label>
                 <input type="text" {...register("title")} className="border p-2 rounded-md" />
                 {errors.title && <span className="text-red-500 text-xs">{errors.title.message}</span>}
+              </div>
+
+
+              <div className="flex flex-col space-y-1">
+                <label className="font-medium">Status</label>
+                <Controller
+                  name="status"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Applied">Applied</SelectItem>
+                        <SelectItem value="Interviewing">Interviewing</SelectItem>
+                        <SelectItem value="Offer">Offer</SelectItem>
+                        <SelectItem value="Rejected">Rejected</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.status && (
+                  <span className="text-red-500 text-xs">{errors.status.message}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <label className="font-medium">URL</label>
+                <input type="text" {...register("url")} className="border p-2 rounded-md" />
+                {errors.url && <span className="text-red-500 text-xs">{errors.url.message}</span>}
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <label className="font-medium">Description</label>
+                <textarea
+                  {...register("description")}
+                  className="border p-2 rounded-md h-48 w-full"
+                />
+                {errors.description && <span className="text-red-500 text-xs">{errors.description.message}</span>}
               </div>
 
               <Button type="submit" className="w-full">Save</Button>
