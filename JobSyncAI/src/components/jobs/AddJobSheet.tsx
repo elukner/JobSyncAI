@@ -20,14 +20,8 @@ import { z } from "zod";
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
 import { UserAuth } from "@/contexts/AuthContext";
+import {jobSchema} from '@/lib/schemas/jobSchema'
 
-const jobSchema = z.object({
-  company: z.string().min(1, { message: "Company name is required." }),
-  title: z.string().min(1, { message: "Job title is required." }),
-  url: z.string().url().optional().or(z.literal('')),
-  description: z.string().optional(),
-  status: z.enum(['Applied', 'Interviewing', 'Offer', 'Rejected']).default('Applied'),
-});
 
 type JobFormInput = z.input<typeof jobSchema>;
 type JobFormOutput = z.output<typeof jobSchema>;
