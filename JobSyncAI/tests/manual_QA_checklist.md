@@ -32,12 +32,18 @@ Then I see an error message and I am prevented from accessing the `/dashboard`.
 -[ ] The "Esc" Key: When the Add Job sheet is open, If I press the Esc key or click the outside overlay, Then the sheet closes without submitting data.
 -[ ] Multi-line Text: When I paste a long job description into the textarea, Then the box remains readable and doesn't break the layout of the sheet.
 
-## 5. Validation (#17)- *Upcoming*
+## 6. Add Realtime Dashboard Sync & UI Polish Ticket #34
+-[ ] **The Realtime Test:** Given I am on the /dashboard, When I add a new job via the AddJobSheet, Then the new job card appears at the very top of the list instantly without a browser refresh.
+-[ ] **The History Test:** Given I have added new jobs, When I manually refresh the browser (Cmd+R), Then all of my jobs (including the new ones) load successfully from the database.
+-[ ] **The Date Polish Test:** Given a job card is displayed, Then the "Applied" date is formatted in a human-readable way (e.g., 4/4/2026) instead of a raw database timestamp.
+-[ ] **The "Read More" Test:** Given I add a job with a massively long description, When it renders on the dashboard, Then it is clamped to 3 lines, and clicking "Read More" expands only that specific card.
+
+## 7. Validation (#17)- *Upcoming*
 -[ ] *Placeholder: TODO*
 
-## 6. Profile Settings (Ticket #5) - *Upcoming*
+## 8. Profile Settings (Ticket #5) - *Upcoming*
 - [ ] *Placeholder: Verify user can paste and save their Master Resume.*
 
-## 7. AI Match Engine (Tickets #6, #7, #8, #19) - *Upcoming*
+## 9. AI Match Engine (Tickets #6, #7, #8, #19) - *Upcoming*
 - [ ] *Placeholder: Verify clicking "Analyze Match" triggers a loading state.*
 - [ ] *Placeholder: Verify Match Score and Missing Keywords render correctly from the AI response.*
