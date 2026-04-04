@@ -2,6 +2,7 @@ import { useState, type ChangeEvent, type ReactNode } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {authSchema} from '@/lib/schemas/authSchema'
+import { useForm } from 'react-hook-form';
 
 interface AuthFormProps {
   title: string;
@@ -38,15 +39,27 @@ export default function AuthForm({ title, buttonText, onSubmitAction, footerLink
     setPassword('')
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // Pass local state up to the parent component's auth handler
-    await onSubmitAction(email, password)
-  }
+// We rename this to 'onValidSubmit' (or anything else you want)
+// Notice we pass it 'data' instead of 'e' (React.FormEvent)!
+const onValidSubmit = async (data: AuthFormOutput) => {
+  // We don't even need e.preventDefault() anymore! React Hook Form does it for us.
+  await onSubmitAction(data.email, data.password);
+};
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState:{errors},
+
+  }= useForm<AuthFormInput, any, AuthFormOutput>({
+      resolver: zodResolver(authSchema),
+    });
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto pt-10">
+      <form onSubmit={handleSubmit(onValidSubmit)} className="max-w-md mx-auto pt-10">
         <h2 className="font-bold pb-2 text-2xl">{title}</h2>
         {footerLink}
         <div className="mt-4">
