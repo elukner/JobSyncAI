@@ -16,17 +16,26 @@ interface ProtectedRouteProps {
  * @param {string} [props.authenticationPath='/login'] - The redirect path for unauthenticated users
  * @returns {JSX.Element} The children if authenticated, otherwise a Navigate component to the authentication path
  */
-const ProtectedRoute = ({ 
-  children, 
-  authenticationPath = '/login' 
+const ProtectedRoute = ({
+  children,
+  authenticationPath = '/login'
 }: ProtectedRouteProps) => {
   const location = useLocation();
-  const { session } = UserAuth(); // Assuming session exists if logged in
+  const { loading, session } = UserAuth(); // Assuming session exists if logged in
 
-  // If there is no session, boot them to the login page
+if (loading) {
+  return (
+    <div className="flex h-screen w-full items-center justify-center">
+       <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-t-transparent"></div>
+    </div>
+  );
+}
+
+
   if (!session) {
     return <Navigate to={authenticationPath} replace state={{ from: location }} />;
   }
+
 
   return <>{children}</>;
 };
