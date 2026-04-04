@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import { supabase } from '../lib/supabase' // Connection to supabase
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 type AuthContextType = {
     session: any
@@ -36,12 +36,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             email: email,
             password: password,
         })
-        if (error?.message === "User already registered") {
-
-            toast.error("Account already exists!", {
-                description: "Try logging in or using a different email.",
-            })
-
+        if (error) {
+            if (error.message === "User already registered") {
+                toast.error("Account already exists!", {
+                    description: "Try logging in or using a different email.",
+                })
+            }
 
             console.error("Error with signing up:", error)
             return { success: false, error }
