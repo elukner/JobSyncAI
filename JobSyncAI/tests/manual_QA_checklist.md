@@ -38,8 +38,11 @@ Then I see an error message and I am prevented from accessing the `/dashboard`.
 -[ ] **The Date Polish Test:** Given a job card is displayed, Then the "Applied" date is formatted in a human-readable way (e.g., 4/4/2026) instead of a raw database timestamp.
 -[ ] **The "Read More" Test:** Given I add a job with a massively long description, When it renders on the dashboard, Then it is clamped to 3 lines, and clicking "Read More" expands only that specific card.
 
-## 7. Validation (#17)- *Upcoming*
--[ ] *Placeholder: TODO*
+## 7. Client-Side Validation & Errors (Ticket #17)
+- [ ] **The "Required" Blocker:** Given I am on the `/login` or `/signup` page, When I leave all fields blank and click Submit, Then the form does not submit and red Zod error messages appear under the inputs.
+- [ ] **The Email Format Check:** Given I am filling out the Auth form, When I type an invalid email like `john@doe` and submit, Then Zod catches the format and displays an inline error.
+- [ ] **The Password Strength Check:** Given I am on the `/signup` page, When I type a password shorter than 6 characters or missing required constraints, Then Zod catches the constraint and displays an inline error.
+- [ ] **The Global Toast Anchor:** Given I am trying to sign up, When I enter an email that already exists in the database, Then the backend catches the duplicate and a Sonner toast notification appears at the top of the screen.
 
 ## 8. Profile Settings (Ticket #5) - *Upcoming*
 - [ ] *Placeholder: Verify user can paste and save their Master Resume.*
