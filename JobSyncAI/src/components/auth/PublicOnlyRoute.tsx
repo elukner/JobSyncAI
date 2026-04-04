@@ -19,18 +19,18 @@ interface PublicOnlyRouteProps {
  * @param {string} [props.authenticationPath='/dashboard'] - The path to redirect authenticated users to
  * @returns {JSX.Element} Either a Navigate component redirecting authenticated users, or the children component
  */
-const PublicOnlyRoute = ({ 
-  children, 
+const PublicOnlyRoute = ({
+  children,
   authenticationPath = '/dashboard'
 }: PublicOnlyRouteProps) => {
   const location = useLocation();
-  const { session } = UserAuth(); // Assuming session exists if logged in
+  const { loading, session } = UserAuth(); // Assuming session exists if logged in
 
-  // If there is no session, boot them to the login page
+  if (loading) return <div>Loading...</div>;
+
   if (session) {
     return <Navigate to={authenticationPath} replace state={{ from: location }} />;
   }
-
   return <>{children}</>;
 };
 
