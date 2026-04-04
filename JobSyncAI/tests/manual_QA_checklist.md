@@ -20,13 +20,24 @@ Then I see an error message and I am prevented from accessing the `/dashboard`.
 - [ ] Verify grid layout is responsive (stacks on mobile, columns on desktop).
 - [ ] Placeholder: Verify mock job cards render correctly with Shadcn styles.
 
-## 4. Job Form & Validation (Tickets #2 & #17) - *Upcoming*
-- [ ] *Placeholder: Verify form blocks submission if required fields are empty.*
-- [ ] *Placeholder: Verify invalid URLs trigger a Zod error message.*
+## 4. Job Form & Validation (Tickets #2 & #17)
+-[ ] The "Happy Path" Submission: Given I fill out all fields correctly, When I click "Save", Then the sheet closes, the form resets to empty, and a new row appears in the Supabase jobs table.
+-[ ] Minimalist Entry: Given I only fill out Company and Title (leaving URL and Description blank), When I click "Save", Then the job is successfully created without errors.
+-[ ] The Enum Check: When I select "Interviewing" from the status dropdown, Then the record in Supabase shows exactly Interviewing (not lowercase or a default).
+-[ ] Persistence Check: When I refresh the browser after a successful save, Then the form remains empty (confirming the reset() worked) but the network tab shows the new job was fetched (once we wire up the fetch logic).
+- [ ] Verify form blocks submission if required fields are empty.
+- [ ] Verify invalid URLs trigger a Zod error message.
 
-## 5. Profile Settings (Ticket #5) - *Upcoming*
+## 5. UI Polishing & UX
+-[ ] The "Esc" Key: When the Add Job sheet is open, If I press the Esc key or click the outside overlay, Then the sheet closes without submitting data.
+-[ ] Multi-line Text: When I paste a long job description into the textarea, Then the box remains readable and doesn't break the layout of the sheet.
+
+## 5. Validation (#17)- *Upcoming*
+-[ ] *Placeholder: TODO*
+
+## 6. Profile Settings (Ticket #5) - *Upcoming*
 - [ ] *Placeholder: Verify user can paste and save their Master Resume.*
 
-## 6. AI Match Engine (Tickets #6, #7, #8, #19) - *Upcoming*
+## 7. AI Match Engine (Tickets #6, #7, #8, #19) - *Upcoming*
 - [ ] *Placeholder: Verify clicking "Analyze Match" triggers a loading state.*
 - [ ] *Placeholder: Verify Match Score and Missing Keywords render correctly from the AI response.*
