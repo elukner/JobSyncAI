@@ -1,4 +1,7 @@
 import { useState, type ChangeEvent, type ReactNode } from 'react'
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {authSchema} from '@/lib/schemas/authSchema'
 
 interface AuthFormProps {
   title: string;
@@ -7,6 +10,10 @@ interface AuthFormProps {
   footerLink: ReactNode;
   loading?: boolean;
 }
+
+type AuthFormInput = z.input<typeof authSchema>;
+type AuthFormOutput = z.output<typeof authSchema>;
+
 
 /**
  * Reusable UI component for authentication screens (Login / Sign Up).
