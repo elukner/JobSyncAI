@@ -116,7 +116,7 @@ export function AddJobSheet() {
                 <label className="font-medium">Description</label>
                 <textarea
                   {...register("description")}
-                  className="border p-2 rounded-md h-48 w-full"
+                  className="border p-2 rounded-md min-h-[200px] w-full resize-y"
                 />
                 {errors.description && <span className="text-red-500 text-xs">{errors.description.message}</span>}
               </div>
