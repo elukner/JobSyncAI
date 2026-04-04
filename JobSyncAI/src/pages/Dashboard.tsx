@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Navigation from '../components/auth/Navigation';
+import { AddJobSheet } from '@/components/jobs/AddJobSheet';
 
 // Define the shape of our data
 interface JobApplication {
@@ -52,6 +53,7 @@ export default function Dashboard() {
   return (
     <Navigation>
       <h1 className="text-center pt-4 text-3xl">Welcome to the Dashboard!</h1>
+      <AddJobSheet />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockJobs.map((job) => (
           <Card key={job.id} className='max-w-md'>
