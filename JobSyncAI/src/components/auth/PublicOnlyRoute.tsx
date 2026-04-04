@@ -26,7 +26,13 @@ const PublicOnlyRoute = ({
   const location = useLocation();
   const { loading, session } = UserAuth(); // Assuming session exists if logged in
 
-  if (loading) return <div>Loading...</div>;
+if (loading) {
+  return (
+    <div className="flex h-screen w-full items-center justify-center">
+       <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-t-transparent"></div>
+    </div>
+  );
+}
 
   if (session) {
     return <Navigate to={authenticationPath} replace state={{ from: location }} />;
