@@ -7,7 +7,6 @@ import type { createClient, RealtimePostgresChangesPayload } from '@supabase/sup
 import { use, useEffect, useState } from 'react';
 
 
-// Define the shape of our data
 interface JobApplication {
   id: string;
   user_id: string;
@@ -30,7 +29,6 @@ function ExpandableDescription({ text }: { text: string | null }) {
       <span className={isExpanded ? "text-muted-foreground" : "line-clamp-3 text-muted-foreground"}>
         {text}
       </span>
-      {/* Only show the button if the text is relatively long */}
       {text.length > 100 && (
         <button 
           onClick={() => setIsExpanded(!isExpanded)} 
@@ -44,13 +42,25 @@ function ExpandableDescription({ text }: { text: string | null }) {
 }
 
 /**
- * Dashboard component that displays the main application interface.
- * Renders a welcome heading and a grid layout containing statistics cards
- * and the primary JobSync AI content area.
+ * Dashboard component that displays a list of job applications with real-time updates.
+ * 
+ * Fetches all job applications from the database on mount and displays them in a responsive grid.
+ * Subscribes to database changes to automatically add new jobs to the dashboard when they are inserted.
+ * 
+ * @component
+ * @returns {JSX.Element} A navigation-wrapped dashboard containing job application cards with company name,
+ * job title, status, URL, description, and application date for each job.
+ * 
+ * @requires UserAuth - Custom hook to get the current user
+ * @requires supabase - Supabase client for database queries and real-time subscriptions
+ * 
+ * @example
+ * ```tsx
+ * <Dashboard />
+ * ```
  */
 export default function Dashboard() {
  const { user } = UserAuth();
-  // 1. Give your state a type and an empty array to start!
   const [jobs, setJobs] = useState<JobApplication[]>([]); 
 
   useEffect(() => {
@@ -65,9 +75,9 @@ export default function Dashboard() {
     fetchjobs(); 
 
 
-    // 2. Put the radio INSIDE the useEffect so it only turns on once
+
     const channel = supabase
-      .channel('jobs_channel') // Name it whatever you want
+      .channel('jobs_channel') 
       .on(
         'postgres_changes',
         {
@@ -77,17 +87,16 @@ export default function Dashboard() {
         },
         (payload) => {
           console.log('New Job detected!', payload.new);
-          // 3. Add the new job to the top of the existing list
           setJobs((prevJobs) => [payload.new as JobApplication, ...prevJobs]);
         }
       )
       .subscribe();
 
-    // 4. Clean up the exact channel you just created when the user leaves the page
+
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []); // Empty dependency array means "run once on load"
+  }, []); 
 
   return (
     <Navigation>
