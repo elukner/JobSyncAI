@@ -49,7 +49,19 @@
 - [ ] **The Save & Bounce:** Given I have edited my resume, When I click "Save Resume", Then a success toast appears, the button disables, and I am redirected back to the Dashboard after 1 second.
 - [ ] **The New User Trigger:** Given I sign up with a brand new account, When I navigate to Profile, Then a blank record already exists (via Postgres Trigger) and I can save my resume without errors.
 
-## 9. Upcoming Core Features
-- [ ] **Ticket #6 (AI Match Engine):** *Placeholder: Verify clicking "Analyze" sends the job description and user resume to the backend and returns a match score.*
-- [ ] **Ticket #19 (Missing Keywords):** *Placeholder: Verify the UI correctly highlights keywords missing from the user's resume compared to the job posting.*
+## 9. Ticket #19
+- [ ] **TODO:** TODO
+
+## 10. Ticket #27
+- [ ] **TODO:** TODO
+
+## 11. Ticket #6 
+- [ ] **TODO:** TODO
+
+## 12. AI Match Score & Keyword Gap UI (Ticket #7) 
+- [ ] **TODO:** Run npm run test to verify all 13 utility/schema tests pass.
+- [ ] **TODO:** Click "Analyze Match" on a new job card; verify the button says "Analyzing...", the progress bar renders with the correct color, and badges appear.
+- [ ] **Persistence Test:** Persistence Test: Hard refresh the browser (Ctrl + R). Verify the score and badges remain visible on the card (fetched from Supabase).
+
+## 13. Upcoming Core Features
 - [ ] **Ticket #27 (Cover Letter Generation):** *Placeholder: Verify the "Generate Cover Letter" button produces a formatted letter using the specific job and resume context.*
