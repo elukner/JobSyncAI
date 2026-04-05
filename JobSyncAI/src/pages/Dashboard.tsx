@@ -24,22 +24,11 @@ interface JobApplication {
 
 
 /**
- * Dashboard component that displays a list of job applications with real-time updates.
+ * Dashboard component that displays a list of job applications.
  * 
- * Fetches all job applications from the database on mount and displays them in a responsive grid.
- * Subscribes to database changes to automatically add new jobs to the dashboard when they are inserted.
- * 
- * @component
- * @returns {JSX.Element} A navigation-wrapped dashboard containing job application cards with company name,
- * job title, status, URL, description, and application date for each job.
- * 
- * @requires UserAuth - Custom hook to get the current user
- * @requires supabase - Supabase client for database queries and real-time subscriptions
- * 
- * @example
- * ```tsx
- * <Dashboard />
- * ```
+ * Fetches all job applications from the database on component mount and displays them
+ * in a responsive grid layout. Implements real-time updates using Supabase PostgreSQL
+ * change subscriptions to listen for newly inserted job records.
  */
 export default function Dashboard() {
   const { user } = UserAuth();
