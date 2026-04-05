@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { UserAuth } from '@/contexts/AuthContext';
 import type { createClient, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { use, useEffect, useState } from 'react';
+import { JobCard } from '@/components/jobs/JobCard';
 
 
 interface JobApplication {
@@ -30,8 +31,8 @@ function ExpandableDescription({ text }: { text: string | null }) {
         {text}
       </span>
       {text.length > 100 && (
-        <button 
-          onClick={() => setIsExpanded(!isExpanded)} 
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
           className="text-xs font-medium text-primary hover:underline mt-1"
         >
           {isExpanded ? "Show Less" : "Read More"}
@@ -60,24 +61,24 @@ function ExpandableDescription({ text }: { text: string | null }) {
  * ```
  */
 export default function Dashboard() {
- const { user } = UserAuth();
-  const [jobs, setJobs] = useState<JobApplication[]>([]); 
+  const { user } = UserAuth();
+  const [jobs, setJobs] = useState<JobApplication[]>([]);
 
   useEffect(() => {
     const fetchjobs = async () => {
       const { data, error } = await supabase
-    .from('jobs')
-    .select('*')
-    .order('created_at', { ascending: false });
+        .from('jobs')
+        .select('*')
+        .order('created_at', { ascending: false });
       if (data) setJobs(data);
     };
 
-    fetchjobs(); 
+    fetchjobs();
 
 
 
     const channel = supabase
-      .channel('jobs_channel') 
+      .channel('jobs_channel')
       .on(
         'postgres_changes',
         {
@@ -96,11 +97,12 @@ export default function Dashboard() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []); 
+  }, []);
 
   return (
     <Navigation>
       <h1 className="text-center pt-4 text-3xl">Welcome to the Dashboard!</h1>
+      <JobCard jobDescription="We need a Senior Frontend Developer with 5 years of React and TypeScript experience." />
       <AddJobSheet />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobs.map((job) => (
