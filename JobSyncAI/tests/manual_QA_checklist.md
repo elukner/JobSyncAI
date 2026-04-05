@@ -2,6 +2,10 @@
 
 *Instructions: Run through the relevant tests in this document before merging any feature branch into `main` to ensure no regressions have occurred.*
 
+## 0. Automated Test Suites
+- [ ] **Frontend Logic:** Run `npm run test` in the React root. Verify all Vitest/Jest utility and schema tests pass.
+- [ ] **Backend Logic:** Run `pytest` in the Python backend root. Verify all API endpoint and AI formatting tests pass.
+
 ## 1. Authentication (Ticket #1)
 - [ ] **Successful Login:** Given valid credentials, When I click "Sign In", Then I am redirected to `/dashboard`.
 - [ ] **Logout Flow:** Given I am logged in, When I click "Logout", Then my session ends and I am redirected to `/login`.
@@ -16,7 +20,7 @@
 
 ## 3. Dashboard UI & Shadcn (Tickets #3 & #22)
 - [ ] **Responsive Grid:** Given I am viewing the dashboard, When I resize the browser from desktop to mobile width, Then the job cards transition from a multi-column grid to a single stacked column.
-- [ ] **Card Rendering:** Given I have jobs in the database, When I view the dashboard, Then the mock job cards render correctly with Shadcn styling and layout.
+- [ ] **Card Rendering:** Given I have jobs in the database, When I view the dashboard, Then the job cards render correctly with Shadcn styling, Title, Company, and an ordered list of details.
 
 ## 4. Job Form & Validation (Tickets #2 & #17)
 - [ ] **The "Happy Path" Submission:** Given I fill out all fields correctly, When I click "Save", Then the sheet closes, the form resets to empty, and a new row appears in the Supabase jobs table.
@@ -30,10 +34,10 @@
 - [ ] **The "Esc" Key:** When the Add Job sheet is open, If I press the Esc key or click the outside overlay, Then the sheet closes without submitting data.
 - [ ] **Multi-line Text:** When I paste a long job description into the textarea, Then the box remains readable and doesn't break the layout of the sheet.
 
-## 6. Add Realtime Dashboard Sync & UI Polish (Ticket #34)
+## 6. Realtime Dashboard Sync & UI Polish (Ticket #34)
 - [ ] **The Realtime Test:** Given I am on the `/dashboard`, When I add a new job via the AddJobSheet, Then the new job card appears at the very top of the list instantly without a browser refresh.
 - [ ] **The History Test:** Given I have added new jobs, When I manually refresh the browser (Cmd+R), Then all of my jobs (including the new ones) load successfully from the database.
-- [ ] **The Date Polish Test:** Given a job card is displayed, Then the "Applied" date is formatted in a human-readable way (e.g., 4/4/2026) instead of a raw database timestamp.
+- [ ] **The Date Polish Test:** Given a job card is displayed, Then the "Applied" date is formatted in a human-readable way instead of a raw database timestamp.
 - [ ] **The "Read More" Test:** Given I add a job with a massively long description, When it renders on the dashboard, Then it is clamped to 3 lines, and clicking "Read More" expands only that specific card.
 
 ## 7. Client-Side Validation & Errors (Ticket #17)
@@ -47,21 +51,22 @@
 - [ ] **Data Persistence:** Given I have previously saved my resume, When the Profile page loads, Then my existing resume text is automatically fetched and displayed in the textarea.
 - [ ] **The Cancel Loop:** Given I am on the Profile page, When I click "Cancel", Then I am immediately navigated back to the previous page (Dashboard).
 - [ ] **The Save & Bounce:** Given I have edited my resume, When I click "Save Resume", Then a success toast appears, the button disables, and I am redirected back to the Dashboard after 1 second.
-- [ ] **The New User Trigger:** Given I sign up with a brand new account, When I navigate to Profile, Then a blank record already exists (via Postgres Trigger) and I can save my resume without errors.
 
-## 9. Ticket #19
-- [ ] **TODO:** TODO
+## 9. AI Engine Backend (Ticket #19)
+- [ ] **FastAPI Boot:** Given I run `uvicorn app.main:app --reload`, Then the Python server starts on port 8000 without crashing.
+- [ ] **Swagger UI:** Given the server is running, When I navigate to `http://127.0.0.1:8000/docs`, Then the interactive API documentation loads correctly.
+- [ ] **CORS Handshake:** Given the React app is running on port 5173, When it sends a POST request to `/api/analyze`, Then the Python server accepts the request without CORS blockage.
 
-## 10. Ticket #27
-- [ ] **TODO:** TODO
+## 10. Frontend AI Wiring (Ticket #6)
+- [ ] **Async Loading State:** Given I click "Analyze Match", Then the button text changes to "Analyzing..." and the button becomes disabled to prevent duplicate clicks.
+- [ ] **Empty Description Guard:** Given a job has no description, Then the "Analyze Match" button is permanently disabled to prevent API crashes.
+- [ ] **Error Catching:** Given the Python server is offline, When I click "Analyze Match", Then the app does not crash, the button resets to its default state, and an error is logged to the console.
 
-## 11. Ticket #6 
-- [ ] **TODO:** TODO
+## 11. AI Match Score UI & Persistence (Tickets #7 & #8) 
+- [ ] **Visual Render:** Given the AI returns a successful JSON response, Then the integer score renders accurately inside a Shadcn Progress bar.
+- [ ] **Dynamic Coloring:** Given the score updates, Then the text color updates dynamically based on the utility rules (< 50 Red, 50-79 Yellow, 80+ Green).
+- [ ] **Keyword Mapping:** Given the AI returns an array of missing keywords, Then the UI maps over the array and displays them as Shadcn Badges.
+- [ ] **Database Persistence:** Given an AI score is displayed on a card, When I hard refresh the browser (Cmd+R), Then the score and badges remain visible because they are successfully fetched from the Supabase table.
 
-## 12. AI Match Score & Keyword Gap UI (Ticket #7) 
-- [ ] **TODO:** Run npm run test to verify all 13 utility/schema tests pass.
-- [ ] **TODO:** Click "Analyze Match" on a new job card; verify the button says "Analyzing...", the progress bar renders with the correct color, and badges appear.
-- [ ] **Persistence Test:** Persistence Test: Hard refresh the browser (Ctrl + R). Verify the score and badges remain visible on the card (fetched from Supabase).
-
-## 13. Upcoming Core Features
+## 12. Upcoming Core Features
 - [ ] **Ticket #27 (Cover Letter Generation):** *Placeholder: Verify the "Generate Cover Letter" button produces a formatted letter using the specific job and resume context.*
