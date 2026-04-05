@@ -43,9 +43,11 @@
 - [ ] **The Global Toast Anchor:** Given I am trying to sign up, When I enter an email that already exists in the database, Then the backend catches the duplicate and a Sonner toast notification appears at the top of the screen.
 
 ## 8. Profile Settings (Ticket #5)
-- [ ] **Data Fetching:** Given I have previously saved my resume, When I navigate to `/profile`, Then the textarea is pre-populated with my resume text automatically.
-- [ ] **The Save Flow:** Given I am on the `/profile` page, When I paste text and click "Save Resume", Then the button disables temporarily, a success toast appears, and the new data persists on a hard refresh.
-- [ ] **The Trigger Check:** Given I create a brand new account, When I navigate to `/profile`, Then the page loads without crashing and I can successfully save my first resume.
+- [ ] **Sidebar Link:** Given I am on the Dashboard, When I click "Settings" in the sidebar, Then the URL updates to `/profile` and the page renders correctly.
+- [ ] **Data Persistence:** Given I have previously saved my resume, When the Profile page loads, Then my existing resume text is automatically fetched and displayed in the textarea.
+- [ ] **The Cancel Loop:** Given I am on the Profile page, When I click "Cancel", Then I am immediately navigated back to the previous page (Dashboard).
+- [ ] **The Save & Bounce:** Given I have edited my resume, When I click "Save Resume", Then a success toast appears, the button disables, and I am redirected back to the Dashboard after 1 second.
+- [ ] **The New User Trigger:** Given I sign up with a brand new account, When I navigate to Profile, Then a blank record already exists (via Postgres Trigger) and I can save my resume without errors.
 
 ## 9. Upcoming Core Features
 - [ ] **Ticket #6 (AI Match Engine):** *Placeholder: Verify clicking "Analyze" sends the job description and user resume to the backend and returns a match score.*
