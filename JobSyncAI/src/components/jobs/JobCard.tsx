@@ -44,8 +44,8 @@ function ExpandableDescription({ text }: { text: string | null }) {
  */
 export function JobCard({ job }: JobCardProps) {
     const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [matchScore, setMatchScore] = useState(0);
-    const [missingKeywords, setMissingKeywords] = useState<string[]>([]);
+    const [matchScore, setMatchScore] = useState(job.match_score || 0);
+    const [missingKeywords, setMissingKeywords] = useState<string[]>(job.missing_keywords || []);
 
     async function handleAnalyzeClick() {
         setIsAnalyzing(true)
