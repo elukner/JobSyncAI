@@ -5,6 +5,7 @@ import { getScoreColor } from '@/lib/utils';
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "../ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { supabase } from '@/lib/supabase';
 
 
 interface JobCardProps {
@@ -50,9 +51,18 @@ export function JobCard({ job }: JobCardProps) {
     async function handleAnalyzeClick() {
         setIsAnalyzing(true)
         try {
-            const data = await fetchAIAnalysis("I am a React dev", job.description)
-            setMatchScore(data.match_score)
-            setMissingKeywords(data.missing_keywords)
+            const data = await fetchAIAnalysis("I am a React dev", job.description || "");
+            setMatchScore(data.match_score);
+            setMissingKeywords(data.missing_keywords);
+
+            const { error: supabaseError } = await supabase
+                .from('jobs')
+                .update({
+                    match_score: data.match_score,
+                    missing_keywords: data.missing_keywords
+                })
+                .eq('id', job.id);
+            if (supabaseError) throw supabaseError;
         } catch (error) {
             console.error("Fetch failed", error)
         } finally {
