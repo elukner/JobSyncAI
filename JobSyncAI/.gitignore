@@ -26,3 +26,8 @@ dist-ssr
 # Local environment variables
 .env
 .env.*
+
+# Python
+backend/venv/
+backend/__pycache__/
+.env
