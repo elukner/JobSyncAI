@@ -12,4 +12,6 @@ export function getScoreColor(score: number) {
   if (score <= 79) return "text-yellow-500";
 
   if (score >= 80) return "text-green-500";
+
+  return "text-gray-500";
 }
