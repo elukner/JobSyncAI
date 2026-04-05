@@ -11,11 +11,23 @@ describe('getScoreColor helper function', () => {
     });
 
     it('returns yellow for scores between 50 and 79', () => {
+        const result = getScoreColor(65);
+
+        expect(result).toBe("text-yellow-500");
 
     });
 
     it('returns green for scores 80 and above', () => {
+        const result = getScoreColor(90);
 
+        expect(result).toBe("text-green-500");
     });
+
+    it('returns gray for scores 79.5', () => {
+        const result = getScoreColor(79.5);
+
+        expect(result).toBe("text-gray-500");
+    });
+
 
 });
