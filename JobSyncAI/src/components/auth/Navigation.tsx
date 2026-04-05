@@ -1,6 +1,6 @@
 import React, { useState, type ReactNode } from 'react';
 import { UserAuth } from '../../contexts/AuthContext';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 
 interface NavigationProps {
     children: ReactNode;
@@ -17,7 +17,12 @@ interface NavigationProps {
  */
 export default function Navigation({ children }: NavigationProps) {
     const { signOut } = UserAuth();
-    const menuItems = ['Dashboard', 'Analytics', 'Users', 'Settings'];
+    const menuItems = [
+        { label: 'Dashboard', path: '/dashboard' },
+        { label: 'Analytics', path: '/analytics' },
+        { label: 'Users', path: '/users' },
+        { label: 'Settings', path: '/profile' }
+    ];
     const location = useLocation();
 
     // Derive the header title from the current URL path 
@@ -34,12 +39,12 @@ export default function Navigation({ children }: NavigationProps) {
                 <h2>Admin</h2>
                 <ul>
                     {menuItems.map(item => (
-                        <li key={item}>
+                        <li key={item.label}>
                             <NavLink
-                                to={`/${item.toLowerCase()}`}
-                                className={({ isActive }) => isActive ? 'active font-bold text-blue-600' : ''}
+                                to={item.path}
+                                className={({ isActive }) => isActive ? 'active font-bold text-primary' : 'text-muted-foreground hover:text-primary'}
                             >
-                                {item}
+                                {item.label}
                             </NavLink>
                         </li>
                     ))}
