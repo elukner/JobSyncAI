@@ -26,7 +26,7 @@ function ExpandableDescription({ text }: { text: string | null }) {
 
   return (
     <div className="inline-flex flex-col items-start">
-      <span className={isExpanded ? "text-muted-foreground" : "line-clamp-3 text-muted-foreground"}>
+      <span className={isExpanded ? "text-muted-foreground break-all" : "line-clamp-3 text-muted-foreground break-all"}>
         {text}
       </span>
       {text.length > 100 && (
