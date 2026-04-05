@@ -33,8 +33,10 @@ async def analyze_job_match(request: MatchRequest):
         },
     ]
     response = client.chat.completions.create(
-        model="meta-llama/llama-3.1-8b-instruct:free", messages=messages
+        model="qwen/qwen3.6-plus:free", messages=messages
     )
     the_ai_string = response.choices[0].message.content
-    parsed_data = json.loads(the_ai_string)
+    print("DEBUG - RAW AI OUTPUT:", the_ai_string)
+    clean_json_string = the_ai_string.replace("```json", "").replace("```", "").strip()
+    parsed_data = json.loads(clean_json_string)
     return parsed_data
