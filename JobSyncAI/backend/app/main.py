@@ -8,29 +8,33 @@ import json
 load_dotenv()
 
 client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY")
+    base_url="https://openrouter.ai/api/v1", api_key=os.getenv("OPENROUTER_API_KEY")
 )
 
 
 app = FastAPI()
 
+
 class MatchRequest(BaseModel):
     resume_text: str
     job_description: str
 
-@app.post("/api/analyze")
 
+@app.post("/api/analyze")
 async def analyze_job_match(request: MatchRequest):
     messages = [
-    {"role": "system", "content": "You are a recruiter. You strictly return JSON formatted like {\"match_score\": 0, \"missing_keywords\": []}."},
-    {"role": "user", "content": f"Here is the resume: {request.resume_text} and the job: {request.job_description}"}
-]
-    response=client.chat.completions.create(model="meta-llama/llama-3-8b-instruct:free", messages=messages) 
+        {
+            "role": "system",
+            "content": 'You are a recruiter. You strictly return JSON formatted like {"match_score": 0, "missing_keywords": []}.',
+        },
+        {
+            "role": "user",
+            "content": f"Here is the resume: {request.resume_text} and the job: {request.job_description}",
+        },
+    ]
+    response = client.chat.completions.create(
+        model="meta-llama/llama-3.1-8b-instruct:free", messages=messages
+    )
     the_ai_string = response.choices[0].message.content
     parsed_data = json.loads(the_ai_string)
     return parsed_data
-
-
-
-
