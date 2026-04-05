@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -13,6 +14,13 @@ client = OpenAI(
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Vite's default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class MatchRequest(BaseModel):
