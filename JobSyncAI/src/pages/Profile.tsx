@@ -4,18 +4,37 @@ import { Textarea } from "@/components/ui/textarea"
 import { UserAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
+/**
+ * Profile component for managing user account settings and AI context.
+ * 
+ * This component allows users to view and edit their master resume, which serves as
+ * context for AI-powered features such as job description tailoring and cover letter generation.
+ * 
+ * @component
+ * @returns {JSX.Element} A profile settings page with a resume editor and save functionality.
+ * 
+ * @example
+ * return <Profile />
+ * 
+ * @remarks
+ * - Fetches the user's master resume from the Supabase 'profiles' table on mount
+ * - Requires user authentication via the UserAuth hook
+ * - Displays success/error toast notifications on save operations
+ * - Disables the save button while the resume is being saved
+ */
 export default function Profile() {
   const { user } = UserAuth();
   
-  //Track the resume string, and a loading state for the button
+ 
   const [resumeText, setResumeText] = useState(""); 
   const [isSaving, setIsSaving] = useState(false);
 
-  //Fetch EXACTLY one profile on load
+  
   useEffect(() => {
     const fetchProfile = async () => {
-      if (!user) return; // Safety check
+      if (!user) return; 
 
       const { data, error } = await supabase
         .from('profiles')
@@ -32,14 +51,26 @@ export default function Profile() {
     };
 
     fetchProfile(); 
-  }, [user]); // Re-run if the user object changes
+  }, [user]); 
 
-  // 3. YOUR MISSION: Write the update logic
-  const handleSave = async () => {
+const handleSave = async () => {
+
+    if (!user) return; 
+
     setIsSaving(true);
     
-    // TODO: Write a supabase .update() call here to save the 'resumeText' state 
-    // to the 'profiles' table where the user_id matches user.id
+    const { error } = await supabase
+      .from('profiles')
+      .update({ master_resume: resumeText }) 
+      .eq('user_id', user.id);               
+    
+    if (error) {
+      console.error("Error saving resume:", error);
+      toast.error("Failed to save resume");
+    } else {
+      console.log("Resume saved successfully!");
+      toast.success("Resume saved!");
+    }
     
     setIsSaving(false);
   }
@@ -69,7 +100,6 @@ export default function Profile() {
         </CardContent>
         
         <CardFooter className="flex justify-end border-t pt-6 mt-2">
-          {/* Use onClick, and disable it if it's currently saving */}
           <Button onClick={handleSave} disabled={isSaving}>
             {isSaving ? "Saving..." : "Save Resume"}
           </Button>
