@@ -90,6 +90,7 @@ export function JobCard({ job }: JobCardProps) {
                             variant="outline"
                             size="lg"
                             onClick={() => handleAnalyzeClick()}
+                            disabled={isAnalyzing || !job.description}
                         >
                             {isAnalyzing ? "Analyzing..." : "Analyze Match"}
                         </Button>
