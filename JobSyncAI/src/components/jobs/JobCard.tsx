@@ -7,11 +7,11 @@ import { Badge } from "../ui/badge";
 
 
 interface JobCardProps {
-    jobDescription: string;
+    job: any;
 
 }
 
-export function JobCard({ jobDescription }: JobCardProps) {
+export function JobCard({ job }: JobCardProps) {
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [matchScore, setMatchScore] = useState(0);
     const [missingKeywords, setMissingKeywords] = useState<string[]>([]);
@@ -19,7 +19,7 @@ export function JobCard({ jobDescription }: JobCardProps) {
     async function handleAnalyzeClick() {
         setIsAnalyzing(true)
         try {
-            const data = await fetchAIAnalysis("I am a React dev", jobDescription)
+            const data = await fetchAIAnalysis("I am a React dev", job.description)
             setMatchScore(data.match_score)
             setMissingKeywords(data.missing_keywords)
         } catch (error) {
@@ -32,7 +32,8 @@ export function JobCard({ jobDescription }: JobCardProps) {
     return (
 
         <div>
-            {jobDescription}
+            {job.title}
+            {job.company}
             <Button
                 variant="outline"
                 size="lg"
