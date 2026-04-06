@@ -22,8 +22,7 @@ import { Toaster } from "@/components/ui/sonner"
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <>
-      <Toaster position="top-center"/>
-      <h1 className="text-center pt-4 text-3xl">JobSyncAI</h1>
+      <Toaster position="top-center" />
       <AuthContextProvider>
         <RouterProvider router={router} />
       </AuthContextProvider>
