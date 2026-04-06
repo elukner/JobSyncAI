@@ -41,7 +41,7 @@ async def analyze_job_match(request: MatchRequest):
         },
     ]
     response = client.chat.completions.create(
-        model="qwen/qwen3.6-plus:free", messages=messages
+        model="openrouter/free", messages=messages
     )
     the_ai_string = response.choices[0].message.content
     print("DEBUG - RAW AI OUTPUT:", the_ai_string)
