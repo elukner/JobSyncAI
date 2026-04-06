@@ -48,11 +48,17 @@ export default function Dashboard() {
 
     const fetchProfile = async () => {
       if (!user) return;
+
       const { data, error } = await supabase
         .from('profiles')
         .select('master_resume')
-        .eq('id', user.id)
-        .single();
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Error fetching profile:", error.message);
+        return;
+      }
 
       if (data?.master_resume) {
         setUserResume(data.master_resume);
