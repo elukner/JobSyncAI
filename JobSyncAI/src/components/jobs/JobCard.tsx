@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase';
 
 interface JobCardProps {
     job: any;
+    userResume: string;
 
 }
 
@@ -43,7 +44,7 @@ function ExpandableDescription({ text }: { text: string | null }) {
  * @param {Job} props.job - The job object containing company, title, description, status, url, and created_at
  * @returns {React.ReactElement} A card element displaying job information and match analysis results
  */
-export function JobCard({ job }: JobCardProps) {
+export function JobCard({ job, userResume }: JobCardProps) {
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [matchScore, setMatchScore] = useState(job.match_score || 0);
     const [missingKeywords, setMissingKeywords] = useState<string[]>(job.missing_keywords || []);
@@ -51,7 +52,7 @@ export function JobCard({ job }: JobCardProps) {
     async function handleAnalyzeClick() {
         setIsAnalyzing(true)
         try {
-            const data = await fetchAIAnalysis("I am a React dev", job.description || "");
+            const data = await fetchAIAnalysis(userResume, job.description || "");
             setMatchScore(data.match_score);
             setMissingKeywords(data.missing_keywords);
 
