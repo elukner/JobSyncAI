@@ -24,21 +24,6 @@ export default function Navigation({ children }: { children: React.ReactNode }) 
         <div className="min-h-screen bg-slate-50">
             <header className="sticky top-0 z-50 w-full border-b bg-white">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                    <div className="flex items-center gap-8">
-                        <Link to="/dashboard" className="text-xl font-bold tracking-tight text-primary">
-                            JobSync AI
-                        </Link>
-                        <nav className="flex items-center gap-6">
-                            <Link
-                                to="/dashboard"
-                                className={`text-sm font-medium transition-colors hover:text-primary 
-                                    ${location.pathname
-                                        === '/dashboard' ? 'text-primary' : 'text-muted-foreground'}`}
-                            >
-                                Dashboard
-                            </Link>
-                        </nav>
-                    </div>
 
                     <div className="flex items-center gap-4">
                         <DropdownMenu>
