@@ -3,8 +3,8 @@
 *Instructions: Run through the relevant tests in this document before merging any feature branch into `main` to ensure no regressions have occurred.*
 
 ## 0. Automated Test Suites
-- [x ] **Frontend Logic:** Run `npm run test` in the React root. Verify all Vitest/Jest utility and schema tests pass.
-- [ x] **Backend Logic:** Run `pytest` in the Python backend root. Verify all API endpoint and AI formatting tests pass.
+- [ ] **Frontend Logic:** Run `npm run test` in the React root. Verify all Vitest/Jest utility and schema tests pass.
+- [ ] **Backend Logic:** Run `pytest` in the Python backend root. Verify all API endpoint and AI formatting tests pass.
 
 ## 1. Authentication (Ticket #1)
 - [ ] **Successful Login:** Given valid credentials, When I click "Sign In", Then I am redirected to `/dashboard`.
@@ -55,20 +55,20 @@
 ## 9. AI Engine Backend (Ticket #19)
 - [ ] **FastAPI Boot:** Given I run `uvicorn app.main:app --reload`, Then the Python server starts on port 8000 without crashing.
 - [ ] **Swagger UI:** Given the server is running, When I navigate to `http://127.0.0.1:8000/docs`, Then the interactive API documentation loads correctly.
-- [x ] **CORS Handshake:** Given the React app is running on port 5173, When it sends a POST request to `/api/analyze`, Then the Python server accepts the request without CORS blockage.
+- [ ] **CORS Handshake:** Given the React app is running on port 5173, When it sends a POST request to `/api/analyze`, Then the Python server accepts the request without CORS blockage.
 
 ## 10. Frontend AI Wiring (Tickets #6 & Real Resume Hookup)
-- [x ] **Real Resume Payload:** Given I click "Analyze Match", Then the network tab confirms the actual string from my saved Profile is sent to the backend, rather than a hardcoded placeholder.
-- [x ] **Async Loading State:** Given I click "Analyze Match", Then the button text changes to "Analyzing..." and the button becomes disabled to prevent duplicate clicks.
-- [x ] **Empty Description Guard:** Given a job has no description, Then the "Analyze Match" button is permanently disabled to prevent API crashes.
-- [x ] **Already Analyzed Guard:** Given a job already has a match score greater than 0, Then the button is permanently disabled and displays "Analyzed" to prevent redundant API calls.
+- [ ] **Real Resume Payload:** Given I click "Analyze Match", Then the network tab confirms the actual string from my saved Profile is sent to the backend, rather than a hardcoded placeholder.
+- [ ] **Async Loading State:** Given I click "Analyze Match", Then the button text changes to "Analyzing..." and the button becomes disabled to prevent duplicate clicks.
+- [ ] **Empty Description Guard:** Given a job has no description, Then the "Analyze Match" button is permanently disabled to prevent API crashes.
+- [ ] **Already Analyzed Guard:** Given a job already has a match score greater than 0, Then the button is permanently disabled and displays "Analyzed" to prevent redundant API calls.
 - [ ] **Error Catching:** Given the Python server is offline, When I click "Analyze Match", Then the app does not crash, the button resets to its default state, and an error is logged to the console.
 
 ## 11. AI Match Score UI & Persistence (Ticket #7) 
-- [x ] **Visual Render:** Given the AI returns a successful JSON response, Then the integer score renders accurately inside a Shadcn Progress bar.
-- [ x] **Dynamic Coloring:** Given the score updates, Then the text color updates dynamically based on the utility rules (< 50 Red, 50-79 Yellow, 80+ Green).
-- [ x] **Keyword Mapping:** Given the AI returns an array of missing keywords, Then the UI maps over the array and displays them as Shadcn Badges spanning multiple lines as needed.
-- [x ] **Database Persistence:** Given an AI score is displayed on a card, When I hard refresh the browser (Cmd+R), Then the score and badges remain visible because they are successfully fetched from the Supabase table.
+- [ ] **Visual Render:** Given the AI returns a successful JSON response, Then the integer score renders accurately inside a Shadcn Progress bar.
+- [ ] **Dynamic Coloring:** Given the score updates, Then the text color updates dynamically based on the utility rules (< 50 Red, 50-79 Yellow, 80+ Green).
+- [ ] **Keyword Mapping:** Given the AI returns an array of missing keywords, Then the UI maps over the array and displays them as Shadcn Badges spanning multiple lines as needed.
+- [ ] **Database Persistence:** Given an AI score is displayed on a card, When I hard refresh the browser (Cmd+R), Then the score and badges remain visible because they are successfully fetched from the Supabase table.
 
 ## 12. Upcoming Core Features
 - [ ] **Ticket #27 (Cover Letter Generation):** *Placeholder: Verify the "Generate Cover Letter" button produces a formatted letter using the specific job and resume context.*
