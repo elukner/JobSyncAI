@@ -1,5 +1,7 @@
 export async function fetchAIAnalysis(resumeText: string, jobDescription: string) {
-    const url = "http://127.0.0.1:8000/api/analyze";
+
+    const baseUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+    const url = `${baseUrl}/api/analyze`;
 
     const response = await fetch(url, {
         method: "POST",
