@@ -20,7 +20,7 @@ import { z } from "zod";
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
 import { UserAuth } from "@/contexts/AuthContext";
-import {jobSchema} from '@/lib/schemas/jobSchema'
+import { jobSchema } from '@/lib/schemas/jobSchema'
 
 
 type JobFormInput = z.input<typeof jobSchema>;
@@ -110,7 +110,7 @@ export function AddJobSheet() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="py-6">
+        <div className="py-6 overflow-y-auto max-h-[80vh] pb-8 px-1">
           <div className="text-sm text-muted-foreground border border-dashed p-4 rounded-md text-center">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
 
