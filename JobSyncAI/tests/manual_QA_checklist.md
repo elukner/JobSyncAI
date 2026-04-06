@@ -8,15 +8,15 @@
 
 ## 1. Authentication (Ticket #1)
 - [ ] **Successful Login:** Given valid credentials, When I click "Sign In", Then I am redirected to `/dashboard`.
-- [ ] **Logout Flow:** Given I am logged in, When I click "Logout", Then my session ends and I am redirected to `/login`.
+- [ ] **Logout Flow:** Given I am logged in, When I open the User Dropdown and click "Logout", Then my session ends and I am redirected to `/login`.
 - [ ] **Successful Sign Up:** Given I am on the `/signup` page, When I enter a new valid email and password and click "Sign Up", Then my account is created in Supabase and I am redirected to `/dashboard`.
 - [ ] **Duplicate Account:** Given I am on the `/signup` page, When I try to sign up with an email that is already registered, Then I see an error message and I am prevented from accessing the `/dashboard`.
 
-## 2. Routing & Navigation (Ticket #16)
+## 2. Routing & Navigation (Ticket #16 & UI Refresh)
 - [ ] **The Bouncer (Protected Routes):** Given I am logged out, When I manually type `/dashboard` into the URL bar, Then I am immediately redirected to `/login`.
 - [ ] **The Reverse Bouncer:** Given I am already logged in, When I manually navigate to `/login`, Then I am redirected back to `/dashboard`.
-- [ ] **SPA Navigation:** When I click between "Dashboard" and "Settings" in the sidebar, Then the URL updates instantly without the page flashing or doing a full browser reload.
-- [ ] **Active State:** When I am on `/dashboard`, Then the Dashboard link is visually highlighted in the sidebar.
+- [ ] **Top-Bar Navigation:** When I click between "JobSync AI" (logo) and "Dashboard" in the top header, Then the URL updates instantly without the page flashing.
+- [ ] **User Dropdown Menu:** Given I am logged in, When I click the circular User Avatar in the top right, Then a Shadcn dropdown menu appears containing "My Account", "Profile Settings", and "Log out".
 
 ## 3. Dashboard UI & Shadcn (Tickets #3 & #22)
 - [ ] **Responsive Grid:** Given I am viewing the dashboard, When I resize the browser from desktop to mobile width, Then the job cards transition from a multi-column grid to a single stacked column.
@@ -46,26 +46,28 @@
 - [ ] **The Password Strength Check:** Given I am on the `/signup` page, When I type a password shorter than 6 characters or missing required constraints, Then Zod catches the constraint and displays an inline error.
 - [ ] **The Global Toast Anchor:** Given I am trying to sign up, When I enter an email that already exists in the database, Then the backend catches the duplicate and a Sonner toast notification appears at the top of the screen.
 
-## 8. Profile Settings (Ticket #5)
-- [ ] **Sidebar Link:** Given I am on the Dashboard, When I click "Settings" in the sidebar, Then the URL updates to `/profile` and the page renders correctly.
+## 8. Profile Settings (Ticket #5 & Integration)
+- [ ] **Dropdown Link:** Given I click my User Avatar, When I select "Profile Settings", Then the URL updates to `/profile` and the settings page renders correctly.
 - [ ] **Data Persistence:** Given I have previously saved my resume, When the Profile page loads, Then my existing resume text is automatically fetched and displayed in the textarea.
-- [ ] **The Cancel Loop:** Given I am on the Profile page, When I click "Cancel", Then I am immediately navigated back to the previous page (Dashboard).
 - [ ] **The Save & Bounce:** Given I have edited my resume, When I click "Save Resume", Then a success toast appears, the button disables, and I am redirected back to the Dashboard after 1 second.
+- [ ] **The 406 Error Guard:** Given I am a brand new user without a saved profile row, When I load the Dashboard, Then the application does not crash with a 406 (Not Acceptable) database error.
 
 ## 9. AI Engine Backend (Ticket #19)
 - [ ] **FastAPI Boot:** Given I run `uvicorn app.main:app --reload`, Then the Python server starts on port 8000 without crashing.
 - [ ] **Swagger UI:** Given the server is running, When I navigate to `http://127.0.0.1:8000/docs`, Then the interactive API documentation loads correctly.
 - [ ] **CORS Handshake:** Given the React app is running on port 5173, When it sends a POST request to `/api/analyze`, Then the Python server accepts the request without CORS blockage.
 
-## 10. Frontend AI Wiring (Ticket #6)
+## 10. Frontend AI Wiring (Tickets #6 & Real Resume Hookup)
+- [ ] **Real Resume Payload:** Given I click "Analyze Match", Then the network tab confirms the actual string from my saved Profile is sent to the backend, rather than a hardcoded placeholder.
 - [ ] **Async Loading State:** Given I click "Analyze Match", Then the button text changes to "Analyzing..." and the button becomes disabled to prevent duplicate clicks.
 - [ ] **Empty Description Guard:** Given a job has no description, Then the "Analyze Match" button is permanently disabled to prevent API crashes.
+- [ ] **Already Analyzed Guard:** Given a job already has a match score greater than 0, Then the button is permanently disabled and displays "Analyzed" to prevent redundant API calls.
 - [ ] **Error Catching:** Given the Python server is offline, When I click "Analyze Match", Then the app does not crash, the button resets to its default state, and an error is logged to the console.
 
-## 11. AI Match Score UI & Persistence (Tickets #7) 
+## 11. AI Match Score UI & Persistence (Ticket #7) 
 - [ ] **Visual Render:** Given the AI returns a successful JSON response, Then the integer score renders accurately inside a Shadcn Progress bar.
 - [ ] **Dynamic Coloring:** Given the score updates, Then the text color updates dynamically based on the utility rules (< 50 Red, 50-79 Yellow, 80+ Green).
-- [ ] **Keyword Mapping:** Given the AI returns an array of missing keywords, Then the UI maps over the array and displays them as Shadcn Badges.
+- [ ] **Keyword Mapping:** Given the AI returns an array of missing keywords, Then the UI maps over the array and displays them as Shadcn Badges spanning multiple lines as needed.
 - [ ] **Database Persistence:** Given an AI score is displayed on a card, When I hard refresh the browser (Cmd+R), Then the score and badges remain visible because they are successfully fetched from the Supabase table.
 
 ## 12. Upcoming Core Features
