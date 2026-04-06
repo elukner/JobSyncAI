@@ -21,35 +21,55 @@ export default function Navigation({ children }: { children: React.ReactNode }) 
     };
 
     return (
-        <div className="dashboard-container">
-            <nav className="sidebar">
-                <ul>
-                    {menuItems.map(item => (
-                        <li key={item.label}>
-                            <NavLink
-                                to={item.path}
-                                className={({ isActive }) => isActive ? 'active font-bold text-primary' : 'text-muted-foreground hover:text-primary'}
+        <div className="min-h-screen bg-slate-50">
+            <header className="sticky top-0 z-50 w-full border-b bg-white">
+                <div className="container flex h-16 items-center justify-between px-4">
+                    <div className="flex items-center gap-8">
+                        <Link to="/dashboard" className="text-xl font-bold tracking-tight text-primary">
+                            JobSync AI
+                        </Link>
+                        <nav className="flex items-center gap-6">
+                            <Link
+                                to="/dashboard"
+                                className={`text-sm font-medium transition-colors hover:text-primary 
+                                    ${location.pathname
+                                        === '/dashboard' ? 'text-primary' : 'text-muted-foreground'}`}
                             >
-                                {item.label}
-                            </NavLink>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-            <div className="main-content">
-                <header className="header">
-                    <h1>{displayTitle}</h1>
-                    <button
-                        onClick={handleSignOut}
-                        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-                    >
-                        Logout
-                    </button>
-                </header>
-                <main className="content-area">
-                    {children}
-                </main>
-            </div>
+                                Dashboard
+                            </Link>
+                        </nav>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="relative h-8 w-8 rounded-full bg-slate-200">
+                                    <User className="h-5 w-5" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56" align="end" forceMount>
+                                <DropdownMenuLabel className="font-normal">
+                                    <p className="text-xs leading-none text-muted-foreground">My Account</p>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={() => navigate('/profile')}>
+                                    <Settings className="mr-2 h-4 w-4" />
+                                    <span>Profile Settings</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+                                    <LogOut className="mr-2 h-4 w-4" />
+                                    <span>Log out</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                </div>
+            </header>
+
+            <main className="container mx-auto py-8 px-4">
+                {children}
+            </main>
         </div>
     );
 }
