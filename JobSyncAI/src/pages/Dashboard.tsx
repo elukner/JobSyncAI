@@ -71,7 +71,6 @@ export default function Dashboard() {
 
   return (
     <Navigation>
-      <h1 className="text-center pt-4 text-3xl">Welcome to the Dashboard!</h1>
       <AddJobSheet />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobs.map((job) => (
