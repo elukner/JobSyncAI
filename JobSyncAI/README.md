@@ -25,6 +25,7 @@ JobSync AI is a secure, full-stack applicant tracking web application designed t
 ### Prerequisites
 * Node.js installed
 * A Supabase project instance
+* Python installed (for the backend API)
 
 ### Installation
 1. Clone the repository:
@@ -37,3 +38,20 @@ JobSync AI is a secure, full-stack applicant tracking web application designed t
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 4. Start the development server:
    `npm run dev`
+
+## Developer Commands 
+
+### Frontend (React/Vite)
+-Start the app: 
+`npm run dev`
+-Run unit tests: 
+`npm run test`
+
+### Backend (Python/FastAPI)
+- Start the local server: 
+   `uvicorn app.main:app --reload`
+   (*Note* If you ever get a CORS or ERR_CONNECTION_RESET error, hit Ctrl+C in the terminal to kill the zombie server, and run this command again to start it fresh).
+
+- Test the API manually: 
+   Open `http://127.0.0.1:8000/docs` in your browser to view the interactive Swagger UI and test your endpoints.
+
