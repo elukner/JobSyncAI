@@ -46,13 +46,14 @@ function ExpandableDescription({ text }: { text: string | null }) {
  */
 export function JobCard({ job, userResume }: JobCardProps) {
     const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [matchScore, setMatchScore] = useState(job.match_score || 0);
+    const [matchScore, setMatchScore] = useState(job.match_score || null);
     const [missingKeywords, setMissingKeywords] = useState<string[]>(job.missing_keywords || []);
 
     async function handleAnalyzeClick() {
         setIsAnalyzing(true)
         try {
             const data = await fetchAIAnalysis(userResume, job.description || "");
+            console.log("DATA RECEIVED FROM BACKEND:", data);
             setMatchScore(data.match_score);
             setMissingKeywords(data.missing_keywords);
 
@@ -91,11 +92,11 @@ export function JobCard({ job, userResume }: JobCardProps) {
                             variant="outline"
                             size="lg"
                             onClick={() => handleAnalyzeClick()}
-                            disabled={isAnalyzing || !job.description || matchScore > 0}
+                            disabled={isAnalyzing || !job.description || matchScore !== null}
                         >
                             {isAnalyzing ? "Analyzing..." : "Analyze Match"}
                         </Button>
-                        {matchScore > 0 && (
+                        {matchScore !== null && (
                             <div className="mt-4 space-y-2">
                                 <p className={getScoreColor(matchScore)}>
                                     Match Score: {matchScore}/100
