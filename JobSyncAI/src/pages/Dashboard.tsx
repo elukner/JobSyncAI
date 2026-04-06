@@ -33,6 +33,7 @@ interface JobApplication {
 export default function Dashboard() {
   const { user } = UserAuth();
   const [jobs, setJobs] = useState<JobApplication[]>([]);
+  const [userResume, setUserResume] = useState<string>("");
 
   useEffect(() => {
     const fetchjobs = async () => {
@@ -45,7 +46,19 @@ export default function Dashboard() {
 
     fetchjobs();
 
+    const fetchProfile = async () => {
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('master_resume')
+        .eq('id', user.id)
+        .single();
 
+      if (data?.master_resume) {
+        setUserResume(data.master_resume);
+      }
+    };
+    fetchProfile();
 
     const channel = supabase
       .channel('jobs_channel')
@@ -74,7 +87,7 @@ export default function Dashboard() {
       <AddJobSheet />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
+          <JobCard key={job.id} job={job} userResume={userResume} />
         ))}
       </div>
     </Navigation>
