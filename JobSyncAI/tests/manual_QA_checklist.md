@@ -62,7 +62,7 @@
 - [ ] **Empty Description Guard:** Given a job has no description, Then the "Analyze Match" button is permanently disabled to prevent API crashes.
 - [ ] **Error Catching:** Given the Python server is offline, When I click "Analyze Match", Then the app does not crash, the button resets to its default state, and an error is logged to the console.
 
-## 11. AI Match Score UI & Persistence (Tickets #7 & #8) 
+## 11. AI Match Score UI & Persistence (Tickets #7) 
 - [ ] **Visual Render:** Given the AI returns a successful JSON response, Then the integer score renders accurately inside a Shadcn Progress bar.
 - [ ] **Dynamic Coloring:** Given the score updates, Then the text color updates dynamically based on the utility rules (< 50 Red, 50-79 Yellow, 80+ Green).
 - [ ] **Keyword Mapping:** Given the AI returns an array of missing keywords, Then the UI maps over the array and displays them as Shadcn Badges.
