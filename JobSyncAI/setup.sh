@@ -1,23 +1,33 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 set -e
 
-echo "Starting JobSync AI Automated Setup..."
+echo "Starting JobSync AI Cross-Platform Setup..."
+
+# Detect OS (macOS/Linux vs Windows Git Bash)
+OS_TYPE="$(uname -s)"
 
 # 1. Install Pixi if not already on the machine
+export PATH="$HOME/.pixi/bin:$PATH"
+
 if ! command -v pixi &> /dev/null; then
     echo "Installing Pixi..."
-    curl -fsSL https://pixi.sh/install.sh | bash
-    export PATH="$HOME/.pixi/bin:$PATH"
-    if ! grep -q ".pixi/bin" ~/.zshrc; then
-        echo 'export PATH="$HOME/.pixi/bin:$PATH"' >> ~/.zshrc
+    if [[ "$OS_TYPE" == MINGW* || "$OS_TYPE" == MSYS* || "$OS_TYPE" == CYGWIN* ]]; then
+        echo "Windows detected! Installing Pixi via PowerShell..."
+        powershell.exe -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
+        export PATH="$USERPROFILE/.pixi/bin:$HOME/.pixi/bin:$PATH"
+    else
+        echo "macOS/Linux detected! Installing Pixi..."
+        curl -fsSL https://pixi.sh/install.sh | bash
+        export PATH="$HOME/.pixi/bin:$PATH"
     fi
 else
-    echo "Pixi is already installed."
+    echo "Pixi is already installed ($(pixi --version)). Checking for updates..."
+    pixi self-update || true
 fi
 
-# 2. Install Node.js globally via Pixi if Node isn't on the machine
+# 2. Check / Install Node.js & npm
 if ! command -v npm &> /dev/null; then
-    echo "Node/npm not found. Installing Node.js via Pixi..."
+    echo "Node/npm not found. Installing Node.js globally via Pixi..."
     pixi global install nodejs
     export PATH="$HOME/.pixi/bin:$PATH"
 else
@@ -30,7 +40,7 @@ npm install
 
 if [ ! -f .env ]; then
     echo "Creating root .env template..."
-    cat <<EOT >> .env
+    cat <<EOT > .env
 VITE_SUPABASE_URL=your_supabase_url_here
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 EOT
@@ -43,10 +53,14 @@ cd backend
 
 if [ ! -f pixi.toml ]; then
     pixi init
+    pixi project platform add win-64 osx-arm64 osx-64 linux-64 || true
     pixi add python=3.11
     pixi add --pypi fastapi uvicorn pydantic openai pypdf python-multipart python-dotenv httpx pydantic-settings
 else
-    # If pixi.toml already exists in Git, this installs everything in one shot!
+    # Ensure current OS platform is supported in pixi.toml before installing
+    if [[ "$OS_TYPE" == MINGW* || "$OS_TYPE" == MSYS* || "$OS_TYPE" == CYGWIN* ]]; then
+        pixi project platform add win-64 2>/dev/null || true
+    fi
     pixi install
 fi
 
@@ -55,7 +69,7 @@ pixi task add dev "uvicorn app.main:app --reload --port 8000" 2>/dev/null || tru
 
 if [ ! -f .env ]; then
     echo "Creating backend/.env template..."
-    cat <<EOT >> .env
+    cat <<EOT > .env
 OPENAI_API_KEY=your_openai_api_key_here
 EOT
     echo "Created backend/.env! Remember to paste your real OpenAI key."

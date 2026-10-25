@@ -5,6 +5,7 @@ platforms = ["osx-arm64", "win-64", "osx-64", "linux-64"]
 version = "0.1.0"
 
 [tasks]
+dev = "uvicorn app.main:app --reload --port 8000"
 
 [dependencies]
 python = "3.11.*"
