@@ -70,7 +70,7 @@ JobSync AI is a secure, full-stack applicant tracking web application designed t
    ```
 4. Create a `.env` file in the root directory for the frontend:
    ```env
-   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_URL=https://<your-project-id>.supabase.co
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
 5. Create a `.env` file inside the `backend/` directory for the API:
