@@ -31,7 +31,15 @@ dist-ssr
 # Python
 backend/venv/
 backend/__pycache__/
+backend/.env
+**/.env
 .env
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Pixi environments
+.pixi/
+backend/.pixi/
+**/.pixi/
+
